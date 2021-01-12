@@ -1,14 +1,22 @@
-import React from 'react';
-import cn from 'classnames';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import cn from "classnames";
 
-import Header from './components/Header';
-import Messages from './components/Messages';
-import Sender from './components/Sender';
-import QuickButtons from './components/QuickButtons';
+import { DialogQuickResponse, GlobalState } from "src/store/types";
 
-import { AnyFunction } from '../../../../utils/types';
+import {
+  addUserMessage,
+  addResponseMessage,
+  setDialogActiveMessage
+} from "../../../../store/actions";
 
-import './style.scss';
+import Header from "./components/Header";
+import Messages from "./components/Messages";
+import QuickButtons from "./components/QuickButtons";
+
+import { AnyFunction } from "../../../../utils/types";
+
+import "./style.scss";
 
 type Props = {
   title: string;
@@ -29,41 +37,67 @@ type Props = {
 };
 
 function Conversation({
-  title,
-  subtitle,
-  senderPlaceHolder,
   showCloseButton,
-  disabledInput,
-  autofocus,
   className,
-  sendMessage,
   toggleChat,
   profileAvatar,
   titleAvatar,
   onQuickButtonClicked,
-  onTextInputChange,
-  sendButtonAlt,
   showTimeStamp
 }: Props) {
+  const { dialogConfig, activeMessage, parameters } = useSelector(
+    (state: GlobalState) => ({
+      dialogConfig: state.dialogConfig.config,
+      activeMessage: state.dialogConfig.activeMessage,
+      parameters: state.dialogConfig.parameters
+    })
+  );
+
+  const dispatch = useDispatch();
+
+  /* - - - - - - - - - - - - - - - - - - - */
+
+  const handleQuickResponseClick = (response: DialogQuickResponse) => {
+    const nextActiveStep = dialogConfig?.script[response.value];
+
+    dispatch(addUserMessage(response.label));
+    dispatch(addResponseMessage(nextActiveStep.message));
+    dispatch(setDialogActiveMessage(nextActiveStep));
+  };
+
   return (
-    <div className={cn('rcw-conversation-container', className)} aria-live="polite">
+    <div
+      className={cn("rcw-conversation-container", className)}
+      aria-live="polite"
+    >
       <Header
-        title={title}
-        subtitle={subtitle}
+        title={parameters ? parameters.title : ""}
+        subtitle={parameters ? parameters.subTitle : ""}
         toggleChat={toggleChat}
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
       />
       <Messages profileAvatar={profileAvatar} showTimeStamp={showTimeStamp} />
       <QuickButtons onQuickButtonClicked={onQuickButtonClicked} />
-      <Sender
-        sendMessage={sendMessage}
-        placeholder={senderPlaceHolder}
-        disabledInput={disabledInput}
-        autofocus={autofocus}
-        onTextInputChange={onTextInputChange}
-        buttonAlt={sendButtonAlt}
-      />
+
+      <ul className="quick-responses-list">
+        {activeMessage?.quickResponses.map(res => {
+          return (
+            <li key={res.value}>
+              <div
+                className="quick-response-button"
+                style={{
+                  background: parameters?.chatOptionButtonBackgroundColor,
+                  color: parameters?.chatOptionButtonTextColor
+                }}
+                onClick={() => handleQuickResponseClick(res)}
+              >
+                {res.label}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

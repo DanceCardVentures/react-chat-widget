@@ -1,6 +1,6 @@
-@import 'common';
-@import 'variables/colors';
-@import 'animation';
+@import "common";
+@import "variables/colors";
+@import "animation";
 
 .rcw-conversation-container {
   border-radius: 10px;
@@ -30,5 +30,36 @@
 @media screen and (max-width: 800px) {
   .rcw-conversation-container {
     @include conversation-container-fs;
+  }
+}
+
+.quick-responses-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin: 0;
+  padding: 10px;
+  border-top: 1px solid lightgray;
+
+  li {
+    margin-right: 8px;
+    list-style: none;
+
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+
+    .quick-response-button {
+      padding: 6px 12px;
+      font-size: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 0;
+      transition: 0.2s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
   }
 }

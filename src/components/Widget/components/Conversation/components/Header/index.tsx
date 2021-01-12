@@ -1,8 +1,10 @@
-import React from 'react';
+import React from "react";
+import { useSelector } from "react-redux";
 
-const close = require('../../../../../../../assets/clear-button.svg') as string;
+const close = require("../../../../../../../assets/clear-button.svg") as string;
 
-import './style.scss';
+import "./style.scss";
+import { GlobalState } from "@types";
 
 type Props = {
   title: string;
@@ -10,21 +12,36 @@ type Props = {
   toggleChat: () => void;
   showCloseButton: boolean;
   titleAvatar?: string;
-}
+};
 
-function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: Props) {
+function Header({
+  title,
+  subtitle,
+  toggleChat,
+  showCloseButton,
+  titleAvatar
+}: Props) {
+  const { parameters } = useSelector((state: GlobalState) => ({
+    parameters: state.dialogConfig.parameters
+  }));
+
   return (
-    <div className="rcw-header">
-      {showCloseButton &&
+    <div
+      style={{ background: parameters?.titleBackgroundColor }}
+      className="rcw-header"
+    >
+      {showCloseButton && (
         <button className="rcw-close-button" onClick={toggleChat}>
           <img src={close} className="rcw-close" alt="close" />
         </button>
-      }
-      <h4 className="rcw-title">
-        {titleAvatar && <img src={titleAvatar} className="avatar" alt="profile" />}
+      )}
+      <h4 style={{ color: parameters?.titleFontColor }} className="rcw-title">
+        {titleAvatar && (
+          <img src={titleAvatar} className="avatar" alt="profile" />
+        )}
         {title}
       </h4>
-      <span>{subtitle}</span>
+      <span style={{ color: parameters?.titleFontColor }}>{subtitle}</span>
     </div>
   );
 }
