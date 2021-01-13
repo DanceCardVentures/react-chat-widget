@@ -52,7 +52,7 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
     const minimalValue = 300;
 
     if (parameters && parameters.chatbotHeight) {
-      const expectedHeight = parameters.chatbotHeight - 160;
+      const expectedHeight = parameters.chatbotHeight - 180;
 
       if (expectedHeight < minimalValue) return minimalValue;
 

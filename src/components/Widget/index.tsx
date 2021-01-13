@@ -9,7 +9,7 @@ import {
   setDialogConfig,
   setWidgetParameters,
   setDialogActiveMessage,
-  addResponseMessage,
+  addResponseMessage
 } from "../../store/actions";
 import { AnyFunction } from "../../utils/types";
 
@@ -21,8 +21,10 @@ import WidgetLayout from "./layout";
 * */
 
 const URLS = {
-  dialogScript: "https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-4.json",
-  widgetLook: "https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-widget-parameters-4.json",
+  dialogScript:
+    "https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-4.json",
+  widgetLook:
+    "https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-widget-parameters-4.json"
 };
 
 function fetchData(url: string) {
@@ -58,10 +60,15 @@ type Props = {
 
 function Widget(props: Props) {
   const { parameters } = useSelector((state: GlobalState) => ({
-    parameters: state.dialogConfig.parameters,
+    parameters: state.dialogConfig.parameters
   }));
 
-  const { handleQuickButtonClicked, handleSubmit, handleNewUserMessage, handleTextInputChange } = props;
+  const {
+    handleQuickButtonClicked,
+    handleSubmit,
+    handleNewUserMessage,
+    handleTextInputChange
+  } = props;
 
   const dispatch = useDispatch();
 
@@ -71,15 +78,18 @@ function Widget(props: Props) {
     const fetchDialogScript = fetchData(URLS.dialogScript);
     const fetchWidgetLookConfig = fetchData(URLS.widgetLook);
 
-    Promise.all([fetchDialogScript, fetchWidgetLookConfig]).then(([script, { widgetParameters }]) => {
-      const dialogConfig = script as DialogConfig;
-      const firstStep = dialogConfig.script[dialogConfig.firstStepId as string];
+    Promise.all([fetchDialogScript, fetchWidgetLookConfig]).then(
+      ([script, { widgetParameters }]) => {
+        const dialogConfig = script as DialogConfig;
+        const firstStep =
+          dialogConfig.script[dialogConfig.firstStepId as string];
 
-      dispatch(setDialogConfig(dialogConfig));
-      dispatch(setWidgetParameters(widgetParameters));
-      dispatch(setDialogActiveMessage(firstStep));
-      dispatch(addResponseMessage(firstStep.message));
-    });
+        dispatch(setDialogConfig(dialogConfig));
+        dispatch(setWidgetParameters(widgetParameters));
+        dispatch(setDialogActiveMessage(firstStep));
+        dispatch(addResponseMessage(firstStep.message));
+      }
+    );
   }
 
   useEffect(() => {

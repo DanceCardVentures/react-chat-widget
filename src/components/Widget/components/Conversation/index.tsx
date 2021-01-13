@@ -13,6 +13,7 @@ import {
 import Header from "./components/Header";
 import Messages from "./components/Messages";
 import QuickButtons from "./components/QuickButtons";
+import Testimonials from "./components/Testimonials";
 
 import { AnyFunction } from "../../../../utils/types";
 
@@ -77,6 +78,7 @@ function Conversation({
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
       />
+      <Testimonials />
       <Messages profileAvatar={profileAvatar} showTimeStamp={showTimeStamp} />
       <QuickButtons onQuickButtonClicked={onQuickButtonClicked} />
 

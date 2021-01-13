@@ -47,9 +47,16 @@ export interface DialogActiveMessage {
   quickResponses: DialogQuickResponse[];
 }
 
+type Testimonial = {
+  author: string;
+  text: string;
+};
+
 export interface DialogConfig {
   firstStepId: string | undefined;
   script: object;
+  credibilityBuilders: string[];
+  testimonials: Testimonial[];
 }
 
 export interface WidgetParameters {

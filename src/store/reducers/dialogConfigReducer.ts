@@ -15,6 +15,7 @@ const initialState = {
 };
 
 const dialogConfigReducer = {
+<<<<<<< HEAD
   [SET_DIALOG_CONFIG]: (
     state: DialogConfigState,
     { config: { script, firstStepId } }
@@ -25,6 +26,12 @@ const dialogConfigReducer = {
         firstStepId,
         script
       }
+=======
+  [SET_DIALOG_CONFIG]: (state: DialogConfigState, { config }) => {
+    return {
+      ...state,
+      config
+>>>>>>> Testimonials WIP
     };
   },
   [SET_DIALOG_ACTIVE_MESSAGE]: (state: DialogConfigState, { message }) => {
