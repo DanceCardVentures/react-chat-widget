@@ -24,6 +24,9 @@ type Props = {
   launcherCloseLabel: string;
   sendButtonAlt: string;
   showTimeStamp: boolean;
+  imagePreview?: boolean;
+  zoomStep?: number;
+  handleSubmit?: AnyFunction;
 }
 
 function Widget({
@@ -43,7 +46,10 @@ function Widget({
   launcherOpenLabel,
   launcherCloseLabel,
   sendButtonAlt,
-  showTimeStamp
+  showTimeStamp,
+  imagePreview,
+  zoomStep,
+  handleSubmit
 }: Props) {
   const dispatch = useDispatch();
 
@@ -54,10 +60,14 @@ function Widget({
   const handleMessageSubmit = (event) => {
     event.preventDefault();
     const userInput = event.target.message.value;
-    if (userInput.trim()) {
-      dispatch(addUserMessage(userInput));
-      handleNewUserMessage(userInput);
+    
+    if (!userInput.trim()) {      
+      return;      
     }
+
+    handleSubmit?.(userInput);
+    dispatch(addUserMessage(userInput));
+    handleNewUserMessage(userInput);
     event.target.message.value = '';
   }
 
@@ -86,6 +96,8 @@ function Widget({
       launcherCloseLabel={launcherCloseLabel}
       sendButtonAlt={sendButtonAlt}
       showTimeStamp={showTimeStamp}
+      imagePreview={imagePreview}
+      zoomStep={zoomStep}
     />
   );
 }

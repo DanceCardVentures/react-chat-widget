@@ -128,8 +128,8 @@ export default App;
 4- Customize the widget to match your app design! You can add both props to manage the title of the widget and the avatar it will use. Of course, feel free to change the styles the widget will have in the CSS
 
 ```js
-import React from 'react';
-import { Widget, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
+import React, { useEffect } from 'react';
+import { Widget, addResponseMessage } from 'react-chat-widget';
 
 import 'react-chat-widget/lib/styles.css';
 
@@ -145,7 +145,6 @@ function App() {
     // Now send the message throught the backend API
   };
 
-  render() {
     return (
       <div className="App">
         <Widget
@@ -156,10 +155,10 @@ function App() {
         />
       </div>
     );
-  } 
 }
 
 export default App;
+
 ```
 
 ## API
@@ -185,11 +184,12 @@ export default App;
 |**launcherCloseLabel**|string|NO|'Close chat'|Alt value for the laucher when open|
 |**sendButtonAlt**|string|NO|'Send'|Send button alt for a11y purposes|
 |**handleTextInputChange**|(event) => any|NO| |Prop that triggers on input change|
+|**handleSubmit**|(event) => any|NO| |Prop that triggers when a message is submitted, used for custom validation|
 
 #### Styles
 
 To change the styles you need the widget to have, simply override the CSS classes wrapping them within the containers and add your own style to them! All classes are prefixed with `rcw-` so they don't override your other classes in case you are not hasing them. 
-To verride, you can do, for expample:
+To override, you can do, for expample:
 
 ```css
 .rcw-conversation-container > .rcw-header {
@@ -238,7 +238,7 @@ As of v3.0, messages now have an optional ID that can be added on creation.If yo
     - component: Component to be render,
     - props: props the component needs,
     - showAvatar: boolean, default value: false; the component will be rendered with the avatar like the messages
-  - Method to render a custom component inse the messages container. With this method, you can add whatever component you need the widget to have.
+  - Method to render a custom component inside the messages container. With this method, you can add whatever component you need the widget to have.
 
 - **setQuickButtons**
   - params:
@@ -283,12 +283,12 @@ You can use a custom component for the Launcher if you need one that's not the d
 
 ```js
 import React from 'react';
-import { Wdiget } from 'react-chat-widget';
+import { Widget } from 'react-chat-widget';
 
 ...
 
 function MyApp() {
-  const getCustomLaucher = (handleToggle) =>
+  const getCustomLauncher = (handleToggle) =>
     <button onClick={handleToggle}>This is my launcher component!</button>
 
   return (
