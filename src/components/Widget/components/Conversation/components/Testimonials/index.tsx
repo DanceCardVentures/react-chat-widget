@@ -1,20 +1,73 @@
-import React from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 
-import { GlobalState } from "@types";
+import { GlobalState, Testimonial } from "@types";
 
 import "./style.scss";
+
+function constructSamples(
+  credibilityBuilders: string[] | undefined,
+  testimonials: Testimonial[] | undefined
+) {
+  const formattedTestimonials =
+    !testimonials || testimonials?.length === 0
+      ? []
+      : testimonials.map(testimonial => {
+          return `${testimonial.text} (${testimonial.author})`;
+        });
+  const formattedCredibilityBuilders =
+    !credibilityBuilders || credibilityBuilders.length === 0
+      ? []
+      : credibilityBuilders;
+
+  const lists = [formattedTestimonials, formattedCredibilityBuilders];
+  const longestListIndex = lists.reduce(
+    (maxI, el, i, arr) => (el.length > arr[maxI].length ? i : maxI),
+    0
+  );
+  const longestList = lists[longestListIndex];
+
+  let samples: string[] = [];
+
+  for (let i = 0; i < longestList.length; i++) {
+    const testimonial = formattedTestimonials[i];
+    const credibilityBuilder = formattedCredibilityBuilders[i];
+
+    if (testimonial) samples.push(testimonial);
+    if (credibilityBuilder) samples.push(credibilityBuilder);
+  }
+
+  return samples;
+}
 
 function Testimonials() {
   const { dialogConfig } = useSelector((state: GlobalState) => ({
     dialogConfig: state.dialogConfig.config
   }));
 
-  console.log("dialogConfig: ", dialogConfig);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const samples = useMemo(
+    () =>
+      constructSamples(
+        dialogConfig?.credibilityBuilders,
+        dialogConfig?.testimonials
+      ),
+    []
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(index => {
+        return index === samples.length - 1 ? 0 : index + 1;
+      });
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="rcw-testimonials-container">
-      <span>awesom teste</span>
+      <span>{samples[currentIndex]}</span>
     </div>
   );
 }

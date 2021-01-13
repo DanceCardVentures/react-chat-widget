@@ -47,7 +47,7 @@ export interface DialogActiveMessage {
   quickResponses: DialogQuickResponse[];
 }
 
-type Testimonial = {
+export type Testimonial = {
   author: string;
   text: string;
 };
