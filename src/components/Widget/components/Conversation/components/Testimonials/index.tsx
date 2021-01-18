@@ -41,8 +41,9 @@ function constructSamples(
 }
 
 function Testimonials() {
-  const { dialogConfig } = useSelector((state: GlobalState) => ({
-    dialogConfig: state.dialogConfig.config
+  const { dialogConfig, parameters } = useSelector((state: GlobalState) => ({
+    dialogConfig: state.dialogConfig.config,
+    parameters: state.dialogConfig.parameters
   }));
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -57,17 +58,24 @@ function Testimonials() {
   );
 
   useEffect(() => {
+    const intervalValue = 10000;
+
     const interval = setInterval(() => {
       setCurrentIndex(index => {
         return index === samples.length - 1 ? 0 : index + 1;
       });
-    }, 8000);
+    }, intervalValue);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="rcw-testimonials-container">
-      <span>{samples[currentIndex]}</span>
+      <span
+        className="rcw-testimonial-label"
+        style={{ color: parameters?.titleBackgroundColor }}
+      >
+        {samples[currentIndex]}
+      </span>
     </div>
   );
 }

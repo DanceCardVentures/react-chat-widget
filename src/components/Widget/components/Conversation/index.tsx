@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
+import { motion } from "framer-motion";
 
 import { DialogQuickResponse, GlobalState } from "src/store/types";
 
@@ -54,7 +55,22 @@ function Conversation({
     })
   );
 
+  const responsesContainerRef = useRef<any>(null);
+
+  // useEffect(() => {
+  //   document.addEventListener("click", event => {
+  //     if (responsesContainerRef && responsesContainerRef.current) {
+  //       const withinBoundaries = event
+  //         .composedPath()
+  //         .includes((responsesContainerRef.current as unknown) as EventTarget);
+  //       console.log("withinBoundaries: ", withinBoundaries);
+  //     }
+  //   });
+  // }, []);
+
   const dispatch = useDispatch();
+
+  const [responsesListIsVisible, setResponsesListVisibility] = useState(false);
 
   /* - - - - - - - - - - - - - - - - - - - */
 
@@ -82,23 +98,58 @@ function Conversation({
       <Messages profileAvatar={profileAvatar} showTimeStamp={showTimeStamp} />
       <QuickButtons onQuickButtonClicked={onQuickButtonClicked} />
 
-      <ul className="quick-responses-list">
+      <motion.ul
+        ref={responsesContainerRef}
+        className="rcw-responses-block"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: responsesListIsVisible ? 1 : 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: responsesListIsVisible ? 0.15 : 0 }}
+      >
         {activeMessage?.quickResponses.map(res => {
           return (
-            <li key={res.value}>
+            <li key={`${res.value}-${res.label.concat("")}`}>
               <div
-                className="quick-response-button"
+                className="rcw-quick-response-button"
                 style={{
                   background: parameters?.chatOptionButtonBackgroundColor,
                   color: parameters?.chatOptionButtonTextColor
                 }}
-                onClick={() => handleQuickResponseClick(res)}
+                onClick={() => {
+                  handleQuickResponseClick(res);
+                  setResponsesListVisibility(false);
+                }}
               >
                 {res.label}
               </div>
             </li>
           );
         })}
+      </motion.ul>
+
+      <ul className="rcw-quick-responses-list">
+        {activeMessage?.quickResponses.length === 1 ? (
+          <div
+            className="rcw-quick-response-button"
+            style={{
+              background: parameters?.chatOptionButtonBackgroundColor,
+              color: parameters?.chatOptionButtonTextColor
+            }}
+            onClick={() => {
+              handleQuickResponseClick(activeMessage?.quickResponses[0]);
+              setResponsesListVisibility(false);
+            }}
+          >
+            {activeMessage?.quickResponses[0].label}
+          </div>
+        ) : (
+          <button
+            className="rcw-more-replies-button"
+            onClick={() => setResponsesListVisibility(flag => !flag)}
+          >
+            {responsesListIsVisible ? "Dismiss" : "More replies"}
+          </button>
+        )}
       </ul>
     </div>
   );

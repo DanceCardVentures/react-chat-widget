@@ -4,6 +4,26 @@
   align-items: center;
   box-sizing: border-box;
   width: 100%;
-  padding: 12px 12px;
+  padding: 14px;
   border-bottom: 1px solid lightgray;
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.85;
+  }
+  25% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.rcw-testimonial-label {
+  animation: blink 10s ease infinite;
 }
