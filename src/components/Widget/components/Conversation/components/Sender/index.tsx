@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useRef, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import { GlobalState } from "src/store/types";
+import { GlobalState } from 'src/store/types';
 
-const send = require("../../../../../../../assets/send_button.svg") as string;
+const send = require('../../../../../../../assets/send_button.svg') as string;
 
-import "./style.scss";
+import './style.scss';
 
 type Props = {
   placeholder: string;
@@ -16,14 +16,7 @@ type Props = {
   onTextInputChange?: (event: any) => void;
 };
 
-function Sender({
-  sendMessage,
-  placeholder,
-  disabledInput,
-  autofocus,
-  onTextInputChange,
-  buttonAlt
-}: Props) {
+function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, buttonAlt }: Props) {
   const showChat = useSelector((state: GlobalState) => state.behavior.showChat);
   const inputRef = useRef(null);
   useEffect(() => {

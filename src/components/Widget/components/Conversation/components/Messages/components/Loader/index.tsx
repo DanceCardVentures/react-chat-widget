@@ -1,11 +1,11 @@
-import React from 'react'; 
+import React from 'react';
 import cn from 'classnames';
 
 import './styles.scss';
 
 type Props = {
   typing: boolean;
-}
+};
 
 function Loader({ typing }: Props) {
   return (

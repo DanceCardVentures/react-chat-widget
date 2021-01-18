@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7123f4e1-09b2-4b7f-8504-91f84f31c848" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dev/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widget/components/Conversation/components/Testimonials/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widget/components/Conversation/components/Testimonials/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widget/components/Conversation/components/Testimonials/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widget/components/Conversation/components/Testimonials/style.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widget/components/Conversation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widget/components/Conversation/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Widget/components/Conversation/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widget/components/Conversation/style.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,6 +24,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="ServiceViewManager">
@@ -51,13 +46,17 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="968" y="479" width="652" height="486" key="find.popup" timestamp="1610976129866">
+    <state x="796" y="361" key="SettingsEditor" timestamp="1610980953893">
       <screen x="0" y="23" width="2560" height="1417" />
     </state>
-    <state x="968" y="479" width="652" height="486" key="find.popup/0.23.2560.1417/2560.23.1680.1027@0.23.2560.1417" timestamp="1610976129866" />
-    <state x="952" y="373" width="670" height="676" key="search.everywhere.popup" timestamp="1610973349073">
+    <state x="796" y="361" key="SettingsEditor/0.23.2560.1417/2560.23.1680.1027@0.23.2560.1417" timestamp="1610980953893" />
+    <state x="968" y="479" width="652" height="486" key="find.popup" timestamp="1610988165119">
       <screen x="0" y="23" width="2560" height="1417" />
     </state>
-    <state x="952" y="373" width="670" height="676" key="search.everywhere.popup/0.23.2560.1417/2560.23.1680.1027@0.23.2560.1417" timestamp="1610973349073" />
+    <state x="968" y="479" width="652" height="486" key="find.popup/0.23.2560.1417/2560.23.1680.1027@0.23.2560.1417" timestamp="1610988165119" />
+    <state x="952" y="373" width="670" height="676" key="search.everywhere.popup" timestamp="1610988171809">
+      <screen x="0" y="23" width="2560" height="1417" />
+    </state>
+    <state x="952" y="373" width="670" height="676" key="search.everywhere.popup/0.23.2560.1417/2560.23.1680.1027@0.23.2560.1417" timestamp="1610988171809" />
   </component>
 </project>

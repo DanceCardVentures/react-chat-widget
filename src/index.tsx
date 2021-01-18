@@ -1,11 +1,11 @@
-import React from "react";
-import { Provider } from "react-redux";
+import React from 'react';
+import { Provider } from 'react-redux';
 
-import Widget from "./components/Widget";
+import Widget from './components/Widget';
 
-import store from "./store";
+import store from './store';
 
-import { AnyFunction } from "./utils/types";
+import { AnyFunction } from './utils/types';
 
 type Props = {
   handleNewUserMessage: AnyFunction;
@@ -39,19 +39,19 @@ function ConnectedWidget(props: Props) {
 }
 
 const defaultProps = {
-  title: "Welcome",
-  subtitle: "This is your chat subtitle",
-  senderPlaceHolder: "Type a message...",
+  title: 'Welcome',
+  subtitle: 'This is your chat subtitle',
+  senderPlaceHolder: 'Type a message...',
   showCloseButton: true,
   fullScreenMode: false,
   autofocus: true,
-  chatId: "rcw-chat-container",
-  launcherOpenLabel: "Open chat",
-  launcherCloseLabel: "Close chat",
-  sendButtonAlt: "Send",
+  chatId: 'rcw-chat-container',
+  launcherOpenLabel: 'Open chat',
+  launcherCloseLabel: 'Close chat',
+  sendButtonAlt: 'Send',
   showTimeStamp: true,
   imagePreview: false,
-  zoomStep: 80,
+  zoomStep: 80
 };
 ConnectedWidget.defaultProps = defaultProps;
 

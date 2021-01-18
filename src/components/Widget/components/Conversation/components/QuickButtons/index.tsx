@@ -1,31 +1,26 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { GlobalState, QuickButton } from "src/store/types";
-import { AnyFunction } from "src/utils/types";
+import { GlobalState, QuickButton } from 'src/store/types';
+import { AnyFunction } from 'src/utils/types';
 
-import "./style.scss";
+import './style.scss';
 
 type Props = {
   onQuickButtonClicked?: AnyFunction;
 };
 
 function QuickButtons({ onQuickButtonClicked }: Props) {
-  const buttons = useSelector(
-    (state: GlobalState) => state.quickButtons.quickButtons
-  );
+  const buttons = useSelector((state: GlobalState) => state.quickButtons.quickButtons);
 
   const getComponentToRender = (button: QuickButton) => {
     const ComponentToRender = button.component;
-    return (
-      <ComponentToRender
-        onQuickButtonClicked={onQuickButtonClicked}
-        button={button}
-      />
-    );
+    return <ComponentToRender onQuickButtonClicked={onQuickButtonClicked} button={button} />;
   };
 
-  if (!buttons.length) return null;
+  if (!buttons.length) {
+    return null;
+  }
 
   return (
     <div className="quick-buttons-container">

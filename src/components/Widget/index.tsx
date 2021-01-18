@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { DialogConfig, GlobalState } from "../../store/types";
+import { DialogConfig, GlobalState } from '../../store/types';
 
 import {
   toggleChat,
@@ -10,10 +10,10 @@ import {
   setWidgetParameters,
   setDialogActiveMessage,
   addResponseMessage
-} from "../../store/actions";
-import { AnyFunction } from "../../utils/types";
+} from '../../store/actions';
+import { AnyFunction } from '../../utils/types';
 
-import WidgetLayout from "./layout";
+import WidgetLayout from './layout';
 
 /*
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -21,10 +21,8 @@ import WidgetLayout from "./layout";
 * */
 
 const URLS = {
-  dialogScript:
-    "https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-4.json",
-  widgetLook:
-    "https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-widget-parameters-4.json"
+  dialogScript: 'https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-4.json',
+  widgetLook: 'https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-widget-parameters-4.json'
 };
 
 function fetchData(url: string) {
@@ -63,12 +61,7 @@ function Widget(props: Props) {
     parameters: state.dialogConfig.parameters
   }));
 
-  const {
-    handleQuickButtonClicked,
-    handleSubmit,
-    handleNewUserMessage,
-    handleTextInputChange
-  } = props;
+  const { handleQuickButtonClicked, handleSubmit, handleNewUserMessage, handleTextInputChange } = props;
 
   const dispatch = useDispatch();
 
@@ -78,18 +71,15 @@ function Widget(props: Props) {
     const fetchDialogScript = fetchData(URLS.dialogScript);
     const fetchWidgetLookConfig = fetchData(URLS.widgetLook);
 
-    Promise.all([fetchDialogScript, fetchWidgetLookConfig]).then(
-      ([script, { widgetParameters }]) => {
-        const dialogConfig = script as DialogConfig;
-        const firstStep =
-          dialogConfig.script[dialogConfig.firstStepId as string];
+    Promise.all([fetchDialogScript, fetchWidgetLookConfig]).then(([script, { widgetParameters }]) => {
+      const dialogConfig = script as DialogConfig;
+      const firstStep = dialogConfig.script[dialogConfig.firstStepId as string];
 
-        dispatch(setDialogConfig(dialogConfig));
-        dispatch(setWidgetParameters(widgetParameters));
-        dispatch(setDialogActiveMessage(firstStep));
-        dispatch(addResponseMessage(firstStep.message));
-      }
-    );
+      dispatch(setDialogConfig(dialogConfig));
+      dispatch(setWidgetParameters(widgetParameters));
+      dispatch(setDialogActiveMessage(firstStep));
+      dispatch(addResponseMessage(firstStep.message));
+    });
   }
 
   useEffect(() => {
@@ -115,7 +105,7 @@ function Widget(props: Props) {
     handleSubmit?.(userInput);
     dispatch(addUserMessage(userInput));
     handleNewUserMessage(userInput);
-    event.target.message.value = "";
+    event.target.message.value = '';
   };
 
   const onQuickButtonClicked = (event, value) => {

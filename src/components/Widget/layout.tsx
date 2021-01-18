@@ -1,17 +1,17 @@
-import React, { useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
-import { useSelector, useDispatch } from "react-redux";
-import cn from "classnames";
+import React, { useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import cn from 'classnames';
 
-import { GlobalState } from "src/store/types";
-import { AnyFunction } from "src/utils/types";
-import { openFullscreenPreview } from "@actions";
+import { GlobalState } from 'src/store/types';
+import { AnyFunction } from 'src/utils/types';
+import { openFullscreenPreview } from '@actions';
 
-import Conversation from "./components/Conversation";
-import Launcher from "./components/Launcher";
-import FullScreenPreview from "./components/FullScreenPreview";
+import Conversation from './components/Conversation';
+import Launcher from './components/Launcher';
+import FullScreenPreview from './components/FullScreenPreview';
 
-import "./style.scss";
+import './style.scss';
 
 type Props = {
   title: string;
@@ -56,14 +56,14 @@ function WidgetLayout({
     showChat: state.behavior.showChat,
     dissableInput: state.behavior.disabledInput,
     visible: state.preview.visible,
-    parameters: state.dialogConfig.parameters,
+    parameters: state.dialogConfig.parameters
   }));
 
   const messageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (showChat) {
-      messageRef.current = document.getElementById("messages") as HTMLDivElement;
+      messageRef.current = document.getElementById('messages') as HTMLDivElement;
     }
     return () => {
       messageRef.current = null;
@@ -71,13 +71,13 @@ function WidgetLayout({
   }, [showChat]);
 
   const eventHandle = evt => {
-    if (evt.target && evt.target.className === "rcw-message-img") {
+    if (evt.target && evt.target.className === 'rcw-message-img') {
       const { src, alt, naturalWidth, naturalHeight } = evt.target as HTMLImageElement;
       const obj = {
-        src: src,
-        alt: alt,
+        src,
+        alt,
         width: naturalWidth,
-        height: naturalHeight,
+        height: naturalHeight
       };
       dispatch(openFullscreenPreview(obj));
     }
@@ -89,24 +89,24 @@ function WidgetLayout({
   useEffect(() => {
     const target = messageRef?.current;
     if (imagePreview && showChat) {
-      target?.addEventListener("click", eventHandle, false);
+      target?.addEventListener('click', eventHandle, false);
     }
 
     return () => {
-      target?.removeEventListener("click", eventHandle);
+      target?.removeEventListener('click', eventHandle);
     };
   }, [imagePreview, showChat]);
 
   useEffect(() => {
-    document.body.setAttribute("style", `overflow: ${visible || fullScreenMode ? "hidden" : "auto"}`);
+    document.body.setAttribute('style', `overflow: ${visible || fullScreenMode ? 'hidden' : 'auto'}`);
   }, [fullScreenMode, visible]);
 
   return (
     <div
       style={{ width: parameters?.chatbotWidth }}
-      className={cn("rcw-widget-container", {
-        "rcw-full-screen": fullScreenMode,
-        "rcw-previewer": imagePreview,
+      className={cn('rcw-widget-container', {
+        'rcw-full-screen': fullScreenMode,
+        'rcw-previewer': imagePreview
       })}
     >
       {showChat && (
@@ -114,7 +114,7 @@ function WidgetLayout({
           sendMessage={onSendMessage}
           toggleChat={onToggleConversation}
           disabledInput={dissableInput}
-          className={showChat ? "active" : "hidden"}
+          className={showChat ? 'active' : 'hidden'}
           onQuickButtonClicked={onQuickButtonClicked}
           onTextInputChange={onTextInputChange}
           {...props}

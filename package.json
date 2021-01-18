@@ -10,6 +10,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.dev.js",
     "build": "webpack --config ./webpack.config.prod.js",
+    "format": "prettier-eslint --write $PWD/'src/**/*.[jt]s?(x)' && eslint --fix .",
     "test": "jest --coverage"
   },
   "keywords": [
@@ -26,6 +27,7 @@
     "markdown-it-link-attributes": "^2.1.0",
     "markdown-it-sanitizer": "^0.4.3",
     "markdown-it-sup": "^1.0.0",
+    "prettier-eslint-cli": "^5.0.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5"
   },

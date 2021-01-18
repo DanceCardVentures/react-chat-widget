@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer } from 'react';
 
 type Layout = {
   width?: number;
@@ -8,13 +8,13 @@ type Layout = {
 interface STATE {
   layout: Layout;
   zoom?: boolean;
-  direction: "vertical" | "horizontal";
+  direction: 'vertical' | 'horizontal';
 }
 
 const initState: STATE = {
   layout: { width: 800 },
   zoom: false,
-  direction: "vertical"
+  direction: 'vertical'
 };
 
 const usePreview = zoomStep => {
@@ -23,29 +23,29 @@ const usePreview = zoomStep => {
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case "initLayout":
+      case 'initLayout':
         return {
           ...state,
           layout: action.payload.layout,
           direction: action.payload.direction,
           zoom: false
         };
-      case "zoomIn":
+      case 'zoomIn':
         return {
           ...state,
           layout: action.layout,
           zoom: true
         };
-      case "zoomOut":
+      case 'zoomOut':
         return {
           ...state,
           layout: action.layout,
           zoom: true
         };
-      case "resetZoom":
+      case 'resetZoom':
         return { ...state, layout: action.layout, direction: action.direction };
       default:
-        throw new Error("Unexpected action");
+        throw new Error('Unexpected action');
     }
   };
 
@@ -57,28 +57,28 @@ const usePreview = zoomStep => {
     // default size
     setFileSize({ width, height });
 
-    const payload: STATE = { layout: {}, direction: "horizontal" };
+    const payload: STATE = { layout: {}, direction: 'horizontal' };
 
     /**
      * Calculate the display ratio of screen to picture
      */
     if (innerWidth / innerHeight <= width / height) {
       payload.layout.width = innerWidth * 0.8;
-      payload.direction = "horizontal";
+      payload.direction = 'horizontal';
     } else {
       payload.layout.height = innerHeight * 0.8;
-      payload.direction = "vertical";
+      payload.direction = 'vertical';
     }
 
     dispatch({
-      type: "initLayout",
+      type: 'initLayout',
       payload
     });
   };
 
   const getLayout = (step: number): Layout => {
     let layout;
-    if (state.direction === "vertical") {
+    if (state.direction === 'vertical') {
       layout = {
         height: state.layout.height + step
       };
@@ -91,7 +91,7 @@ const usePreview = zoomStep => {
   };
 
   const isMinSize = (): Boolean => {
-    if (state.direction === "vertical") {
+    if (state.direction === 'vertical') {
       return state.layout.height > windowSize.height / 3;
     }
     return state.layout.width > windowSize.width / 3;
@@ -99,7 +99,7 @@ const usePreview = zoomStep => {
 
   const onZoomIn = (): void => {
     dispatch({
-      type: "zoomIn",
+      type: 'zoomIn',
       layout: getLayout(zoomStep)
     });
   };
@@ -107,7 +107,7 @@ const usePreview = zoomStep => {
   const onZoomOut = (): void => {
     if (isMinSize()) {
       dispatch({
-        type: "zoomOut",
+        type: 'zoomOut',
         layout: getLayout(-zoomStep)
       });
     }

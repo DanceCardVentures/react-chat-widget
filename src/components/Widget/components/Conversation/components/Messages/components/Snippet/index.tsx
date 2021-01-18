@@ -8,7 +8,7 @@ import './styles.scss';
 type Props = {
   message: Link;
   showTimeStamp: boolean;
-}
+};
 
 function Snippet({ message, showTimeStamp }: Props) {
   return (

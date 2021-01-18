@@ -1,24 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import cn from "classnames";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import cn from 'classnames';
+import { motion } from 'framer-motion';
 
-import { DialogQuickResponse, GlobalState } from "src/store/types";
+import { DialogQuickResponse, GlobalState } from 'src/store/types';
 
-import {
-  addUserMessage,
-  addResponseMessage,
-  setDialogActiveMessage
-} from "../../../../store/actions";
+import { addUserMessage, addResponseMessage, setDialogActiveMessage } from '../../../../store/actions';
 
-import Header from "./components/Header";
-import Messages from "./components/Messages";
-import QuickButtons from "./components/QuickButtons";
-import Testimonials from "./components/Testimonials";
+import Header from './components/Header';
+import Messages from './components/Messages';
+import QuickButtons from './components/QuickButtons';
+import Testimonials from './components/Testimonials';
 
-import { AnyFunction } from "../../../../utils/types";
+import { AnyFunction } from '../../../../utils/types';
 
-import "./style.scss";
+import './style.scss';
 
 type Props = {
   title: string;
@@ -47,13 +43,11 @@ function Conversation({
   onQuickButtonClicked,
   showTimeStamp
 }: Props) {
-  const { dialogConfig, activeMessage, parameters } = useSelector(
-    (state: GlobalState) => ({
-      dialogConfig: state.dialogConfig.config,
-      activeMessage: state.dialogConfig.activeMessage,
-      parameters: state.dialogConfig.parameters
-    })
-  );
+  const { dialogConfig, activeMessage, parameters } = useSelector((state: GlobalState) => ({
+    dialogConfig: state.dialogConfig.config,
+    activeMessage: state.dialogConfig.activeMessage,
+    parameters: state.dialogConfig.parameters
+  }));
 
   const responsesContainerRef = useRef<any>(null);
 
@@ -83,13 +77,10 @@ function Conversation({
   };
 
   return (
-    <div
-      className={cn("rcw-conversation-container", className)}
-      aria-live="polite"
-    >
+    <div className={cn('rcw-conversation-container', className)} aria-live="polite">
       <Header
-        title={parameters ? parameters.title : ""}
-        subtitle={parameters ? parameters.subTitle : ""}
+        title={parameters ? parameters.title : ''}
+        subtitle={parameters ? parameters.subTitle : ''}
         toggleChat={toggleChat}
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
@@ -106,25 +97,23 @@ function Conversation({
         exit={{ opacity: 0 }}
         transition={{ duration: responsesListIsVisible ? 0.15 : 0 }}
       >
-        {activeMessage?.quickResponses.map(res => {
-          return (
-            <li key={`${res.value}-${res.label.concat("")}`}>
-              <div
-                className="rcw-quick-response-button"
-                style={{
-                  background: parameters?.chatOptionButtonBackgroundColor,
-                  color: parameters?.chatOptionButtonTextColor
-                }}
-                onClick={() => {
-                  handleQuickResponseClick(res);
-                  setResponsesListVisibility(false);
-                }}
-              >
-                {res.label}
-              </div>
-            </li>
-          );
-        })}
+        {activeMessage?.quickResponses.map(res => (
+          <li key={`${res.value}-${res.label.concat('')}`}>
+            <div
+              className="rcw-quick-response-button"
+              style={{
+                background: parameters?.chatOptionButtonBackgroundColor,
+                color: parameters?.chatOptionButtonTextColor
+              }}
+              onClick={() => {
+                handleQuickResponseClick(res);
+                setResponsesListVisibility(false);
+              }}
+            >
+              {res.label}
+            </div>
+          </li>
+        ))}
       </motion.ul>
 
       <ul className="rcw-quick-responses-list">
@@ -147,7 +136,7 @@ function Conversation({
             className="rcw-more-replies-button"
             onClick={() => setResponsesListVisibility(flag => !flag)}
           >
-            {responsesListIsVisible ? "Dismiss" : "More replies"}
+            {responsesListIsVisible ? 'Dismiss' : 'More replies'}
           </button>
         )}
       </ul>
