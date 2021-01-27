@@ -1,7 +1,28 @@
 import { ElementType } from 'react';
 
 import * as actionsTypes from './types';
-import { LinkParams, ImageState } from '../types';
+import { LinkParams, ImageState, DialogConfig, DialogActiveMessage, WidgetParameters } from '../types';
+
+export function setDialogConfig(config: DialogConfig): actionsTypes.SetDialogConfig {
+  return {
+    type: actionsTypes.SET_DIALOG_CONFIG,
+    config
+  };
+}
+
+export function setWidgetParameters(parameters: WidgetParameters): actionsTypes.SetWidgetParameters {
+  return {
+    type: actionsTypes.SET_WIDGET_PARAMETERS,
+    parameters
+  };
+}
+
+export function setDialogActiveMessage(message: DialogActiveMessage): actionsTypes.SetDialogActiveMessage {
+  return {
+    type: actionsTypes.SET_DIALOG_ACTIVE_MESSAGE,
+    message
+  };
+}
 
 export function toggleChat(): actionsTypes.ToggleChat {
   return {
@@ -34,7 +55,7 @@ export function addResponseMessage(text: string, id?: string): actionsTypes.AddR
 export function toggleMsgLoader(): actionsTypes.ToggleMsgLoader {
   return {
     type: actionsTypes.TOGGLE_MESSAGE_LOADER
-  }
+  };
 }
 
 export function addLinkSnippet(link: LinkParams, id?: string): actionsTypes.AddLinkSnippet {
@@ -73,11 +94,13 @@ export function hideAvatar(index: number): actionsTypes.HideAvatar {
   };
 }
 
-export function setQuickButtons(buttons: Array<{ label: string, value: string | number }>): actionsTypes.SetQuickButtons {
+export function setQuickButtons(
+  buttons: Array<{ label: string; value: string | number }>
+): actionsTypes.SetQuickButtons {
   return {
     type: actionsTypes.SET_QUICK_BUTTONS,
     buttons
-  }
+  };
 }
 
 export function deleteMessages(count: number, id?: string): actionsTypes.DeleteMessages {
@@ -85,20 +108,20 @@ export function deleteMessages(count: number, id?: string): actionsTypes.DeleteM
     type: actionsTypes.DELETE_MESSAGES,
     count,
     id
-  }
+  };
 }
 
 export function setBadgeCount(count: number): actionsTypes.SetBadgeCount {
   return {
     type: actionsTypes.SET_BADGE_COUNT,
     count
-  }
+  };
 }
 
 export function markAllMessagesRead(): actionsTypes.MarkAllMessagesRead {
   return {
     type: actionsTypes.MARK_ALL_READ
-  }
+  };
 }
 
 export function openFullscreenPreview(payload: ImageState): actionsTypes.FullscreenPreviewActions {

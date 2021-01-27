@@ -1,10 +1,37 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { toggleChat, addUserMessage } from '../../store/actions';
+import { DialogConfig, GlobalState } from '../../store/types';
+
+import {
+  toggleChat,
+  addUserMessage,
+  setDialogConfig,
+  setWidgetParameters,
+  setDialogActiveMessage,
+  addResponseMessage
+} from '../../store/actions';
 import { AnyFunction } from '../../utils/types';
 
 import WidgetLayout from './layout';
+
+/*
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+* */
+
+const integrationId = '1d20328f-b6ef-4ead-a535-90c7e912f725';
+
+const URLS = {
+  dialogScript: `https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-${integrationId}.json`,
+  widgetLook: `https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-widget-parameters-${integrationId}.json`
+};
+
+function fetchData(url: string) {
+  return fetch(url).then(response => response.json());
+}
+
+/* - - - - - - - - - - - - - - - - - - - */
 
 type Props = {
   title: string;
@@ -27,77 +54,72 @@ type Props = {
   imagePreview?: boolean;
   zoomStep?: number;
   handleSubmit?: AnyFunction;
-}
+};
 
-function Widget({
-  title,
-  titleAvatar,
-  subtitle,
-  senderPlaceHolder,
-  profileAvatar,
-  showCloseButton,
-  fullScreenMode,
-  autofocus,
-  customLauncher,
-  handleNewUserMessage,
-  handleQuickButtonClicked,
-  handleTextInputChange,
-  chatId,
-  launcherOpenLabel,
-  launcherCloseLabel,
-  sendButtonAlt,
-  showTimeStamp,
-  imagePreview,
-  zoomStep,
-  handleSubmit
-}: Props) {
+function Widget(props: Props) {
+  const { parameters } = useSelector((state: GlobalState) => ({
+    parameters: state.dialogConfig.parameters
+  }));
+
+  const { handleQuickButtonClicked, handleSubmit, handleNewUserMessage, handleTextInputChange } = props;
+
   const dispatch = useDispatch();
 
-  const toggleConversation = () => {
-    dispatch(toggleChat());
+  /* - - - - - - - - - - - - - - - - - - - */
+
+  function fetchWidgetData() {
+    const fetchDialogScript = fetchData(URLS.dialogScript);
+    const fetchWidgetLookConfig = fetchData(URLS.widgetLook);
+
+    Promise.all([fetchDialogScript, fetchWidgetLookConfig]).then(([script, { widgetParameters }]) => {
+      const dialogConfig = script as DialogConfig;
+      const firstStep = dialogConfig.script[dialogConfig.firstStepId as string];
+
+      dispatch(setDialogConfig(dialogConfig));
+      dispatch(setWidgetParameters(widgetParameters));
+      dispatch(setDialogActiveMessage(firstStep));
+      dispatch(addResponseMessage(firstStep.message));
+    });
   }
 
-  const handleMessageSubmit = (event) => {
+  useEffect(() => {
+    fetchWidgetData();
+  }, []);
+
+  useEffect(() => {
+    if (parameters && parameters.autoopenChatbot) {
+      dispatch(toggleChat());
+    }
+  }, [parameters]);
+
+  /* - - - - - - - - - - - - - - - - - - - */
+
+  const handleMessageSubmit = event => {
     event.preventDefault();
     const userInput = event.target.message.value;
-    
-    if (!userInput.trim()) {      
-      return;      
+
+    if (!userInput.trim()) {
+      return;
     }
 
     handleSubmit?.(userInput);
     dispatch(addUserMessage(userInput));
     handleNewUserMessage(userInput);
     event.target.message.value = '';
-  }
+  };
 
   const onQuickButtonClicked = (event, value) => {
     event.preventDefault();
-    handleQuickButtonClicked?.(value)
-  }
+    handleQuickButtonClicked?.(value);
+  };
 
   return (
     <WidgetLayout
-      onToggleConversation={toggleConversation}
+      onToggleConversation={() => dispatch(toggleChat())}
       onSendMessage={handleMessageSubmit}
       onQuickButtonClicked={onQuickButtonClicked}
-      title={title}
-      titleAvatar={titleAvatar}
-      subtitle={subtitle}
-      senderPlaceHolder={senderPlaceHolder}
-      profileAvatar={profileAvatar}
-      showCloseButton={showCloseButton}
-      fullScreenMode={fullScreenMode}
-      autofocus={autofocus}
-      customLauncher={customLauncher}
       onTextInputChange={handleTextInputChange}
-      chatId={chatId}
-      launcherOpenLabel={launcherOpenLabel}
-      launcherCloseLabel={launcherCloseLabel}
-      sendButtonAlt={sendButtonAlt}
-      showTimeStamp={showTimeStamp}
-      imagePreview={imagePreview}
-      zoomStep={zoomStep}
+      {...props}
     />
   );
 }

@@ -1,6 +1,6 @@
-@import 'common';
-@import 'variables/colors';
-@import 'animation';
+@import "common";
+@import "variables/colors";
+@import "animation";
 
 .rcw-conversation-container {
   border-radius: 10px;
@@ -30,5 +30,60 @@
 @media screen and (max-width: 800px) {
   .rcw-conversation-container {
     @include conversation-container-fs;
+  }
+}
+
+.rcw-responses-carousel {
+  position: relative;
+  height: 150px;
+  padding: 10px;
+  border-top: 1px solid lightgray;
+}
+
+.rcw-responses-animated-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+
+  &.rcw-responses-additional-paddings {
+    left: 45px;
+  }
+}
+
+.rcw-quick-response-button {
+  max-width: 290px;
+  margin-bottom: 7px;
+  padding: 6px 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 0;
+  transition: 0.2s ease;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.rcw-responses-nav-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 10px;
+  left: 5px;
+
+  button {
+    margin: 0 0 7px 4px;
+    padding: 5px;
+    width: 25px;
+    border-radius: 8px;
+    border: 1px solid lightgrey;
+    transition: 0.2s ease;
+    outline: none;
+
+    &:hover:not(:disabled) {
+      border: 1px solid black;
+      cursor: pointer;
+    }
   }
 }

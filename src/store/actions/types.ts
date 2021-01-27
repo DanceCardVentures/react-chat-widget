@@ -1,6 +1,16 @@
 import { ElementType } from 'react';
 
-import { LinkParams, FullscreenPreviewState } from '../types';
+import {
+  LinkParams,
+  FullscreenPreviewState,
+  DialogConfig,
+  WidgetParameters,
+  DialogActiveMessage
+} from '../types';
+
+export const SET_DIALOG_CONFIG = 'DIALOG_CONFIG/SET_DIALOG_CONFIG';
+export const SET_DIALOG_ACTIVE_MESSAGE = 'DIALOG_CONFIG/SET_DIALOG_ACTIVE_MESSAGE';
+export const SET_WIDGET_PARAMETERS = 'WIDGET/SET_WIDGET_PARAMETERS';
 
 export const TOGGLE_CHAT = 'BEHAVIOR/TOGGLE_CHAT';
 export const TOGGLE_INPUT_DISABLED = 'BEHAVIOR/TOGGLE_INPUT_DISABLED';
@@ -17,6 +27,23 @@ export const MARK_ALL_READ = 'MESSAGES/MARK_ALL_READ';
 export const SET_QUICK_BUTTONS = 'SET_QUICK_BUTTONS';
 export const OPEN_FULLSCREEN_PREVIEW = 'FULLSCREEN/OPEN_PREVIEW';
 export const CLOSE_FULLSCREEN_PREVIEW = 'FULLSCREEN/CLOSE_PREVIEW';
+
+/* - - - - - - - - - - - - - - - - - - - */
+
+export interface SetDialogConfig {
+  type: typeof SET_DIALOG_CONFIG;
+  config: DialogConfig;
+}
+
+export interface SetDialogActiveMessage {
+  type: typeof SET_DIALOG_ACTIVE_MESSAGE;
+  message: DialogActiveMessage;
+}
+
+export interface SetWidgetParameters {
+  type: typeof SET_WIDGET_PARAMETERS;
+  parameters: WidgetParameters;
+}
 
 export interface ToggleChat {
   type: typeof TOGGLE_CHAT;
@@ -73,7 +100,7 @@ export interface DeleteMessages {
 
 export interface SetQuickButtons {
   type: typeof SET_QUICK_BUTTONS;
-  buttons: Array<{ label: string, value: string | number }>;
+  buttons: Array<{ label: string; value: string | number }>;
 }
 
 export interface SetBadgeCount {
@@ -85,16 +112,26 @@ export interface MarkAllMessagesRead {
   type: typeof MARK_ALL_READ;
 }
 
+export type DialogConfigActions = SetDialogConfig;
+
 export type BehaviorActions = ToggleChat | ToggleInputDisabled | ToggleMsgLoader;
 
-export type MessagesActions = AddUserMessage | AddResponseMessage | AddLinkSnippet | RenderCustomComponent
-                              | DropMessages | HideAvatar | DeleteMessages | MarkAllMessagesRead | SetBadgeCount;
+export type MessagesActions =
+  | AddUserMessage
+  | AddResponseMessage
+  | AddLinkSnippet
+  | RenderCustomComponent
+  | DropMessages
+  | HideAvatar
+  | DeleteMessages
+  | MarkAllMessagesRead
+  | SetBadgeCount;
 
 export type QuickButtonsActions = SetQuickButtons;
 
 export interface openFullscreenPreview {
   type: typeof OPEN_FULLSCREEN_PREVIEW;
-  payload: FullscreenPreviewState
+  payload: FullscreenPreviewState;
 }
 
 export interface closeFullscreenPreview {

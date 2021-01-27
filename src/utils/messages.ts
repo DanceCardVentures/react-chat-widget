@@ -21,7 +21,7 @@ export function createNewMessage(text: string, sender: string, id?: string): Mes
   };
 }
 
-export function createLinkSnippet(link: LinkParams, id?: string) : Link {
+export function createLinkSnippet(link: LinkParams, id?: string): Link {
   return {
     type: MESSAGES_TYPES.SNIPPET.LINK,
     component: Snippet,
@@ -36,7 +36,12 @@ export function createLinkSnippet(link: LinkParams, id?: string) : Link {
   };
 }
 
-export function createComponentMessage(component: ElementType, props: any, showAvatar: boolean, id?: string): CustomCompMessage {
+export function createComponentMessage(
+  component: ElementType,
+  props: any,
+  showAvatar: boolean,
+  id?: string
+): CustomCompMessage {
   return {
     type: MESSAGES_TYPES.CUSTOM_COMPONENT,
     component,
@@ -49,7 +54,7 @@ export function createComponentMessage(component: ElementType, props: any, showA
   };
 }
 
-export function createQuickButton(button: { label: string, value: string | number }) {
+export function createQuickButton(button: { label: string; value: string | number }) {
   return {
     component: QuickButton,
     label: button.label,
@@ -64,7 +69,7 @@ function sinEaseOut(timestamp: any, begining: any, change: any, duration: any) {
 }
 
 /**
- * 
+ *
  * @param {*} target scroll target
  * @param {*} scrollStart
  * @param {*} scroll scroll distance
@@ -72,24 +77,28 @@ function sinEaseOut(timestamp: any, begining: any, change: any, duration: any) {
 function scrollWithSlowMotion(target: any, scrollStart: any, scroll: number) {
   const raf = window?.requestAnimationFrame;
   let start = 0;
-  const step = (timestamp) => {
+  const step = timestamp => {
     if (!start) {
       start = timestamp;
     }
-    let stepScroll = sinEaseOut(timestamp - start, 0, scroll, MESSAGE_BOX_SCROLL_DURATION);
-    let total = scrollStart + stepScroll;
+    const stepScroll = sinEaseOut(timestamp - start, 0, scroll, MESSAGE_BOX_SCROLL_DURATION);
+    const total = scrollStart + stepScroll;
     target.scrollTop = total;
     if (total < scrollStart + scroll) {
       raf(step);
     }
-  }
+  };
   raf(step);
 }
 
 export function scrollToBottom(messagesDiv: HTMLDivElement | null) {
-  if (!messagesDiv) return;
+  if (!messagesDiv) {
+    return;
+  }
   const screenHeight = messagesDiv.clientHeight;
-  const scrollTop = messagesDiv.scrollTop;
+  const { scrollTop } = messagesDiv;
   const scrollOffset = messagesDiv.scrollHeight - (scrollTop + screenHeight);
-  if (scrollOffset) scrollWithSlowMotion(messagesDiv, scrollTop, scrollOffset);
+  if (scrollOffset) {
+    scrollWithSlowMotion(messagesDiv, scrollTop, scrollOffset);
+  }
 }

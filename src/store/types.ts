@@ -9,11 +9,11 @@ type BaseMessage = {
   unread: boolean;
   customId?: string;
   props?: any;
-}
+};
 
 export interface Message extends BaseMessage {
   text: string;
-};
+}
 
 export type QuickButton = {
   label: string;
@@ -25,7 +25,7 @@ export interface Link extends BaseMessage {
   title: string;
   link: string;
   target: string;
-};
+}
 
 export interface LinkParams {
   link: string;
@@ -37,11 +37,58 @@ export interface CustomCompMessage extends BaseMessage {
   props: any;
 }
 
+export interface DialogQuickResponse {
+  label: string;
+  value: string;
+}
+
+export interface DialogActiveMessage {
+  message: string;
+  quickResponses: DialogQuickResponse[];
+}
+
+export type Testimonial = {
+  author: string;
+  text: string;
+};
+
+export interface DialogConfig {
+  firstStepId: string | undefined;
+  script: object;
+  credibilityBuilders: string[];
+  testimonials: Testimonial[];
+}
+
+export interface WidgetParameters {
+  titleFontColor: string;
+  titleBackgroundColor: string;
+  robotBackgroundColor: string;
+  robotTextColor: string;
+  userBackgroundColor: string;
+  userTextColor: string;
+  chatOptionButtonBackgroundColor: string;
+  chatOptionButtonTextColor: string;
+  openButtonColor: string;
+  linkColor: string;
+  fontSize: number;
+  title: string;
+  subTitle: string;
+  chatbotWidth: number;
+  chatbotHeight: number;
+  autoopenChatbot: boolean;
+}
+
+export interface DialogConfigState {
+  config: DialogConfig | undefined;
+  activeMessage: DialogActiveMessage | undefined;
+  parameters: WidgetParameters | undefined;
+}
+
 export interface BehaviorState {
   showChat: boolean;
   disabledInput: boolean;
   messageLoader: boolean;
-};
+}
 
 export interface MessagesState {
   messages: (Message | Link | CustomCompMessage)[];
@@ -61,9 +108,10 @@ export interface ImageState {
 
 export interface FullscreenPreviewState extends ImageState {
   visible?: boolean;
-};
+}
 
 export interface GlobalState {
+  dialogConfig: DialogConfigState;
   messages: MessagesState;
   behavior: BehaviorState;
   quickButtons: QuickButtonsState;

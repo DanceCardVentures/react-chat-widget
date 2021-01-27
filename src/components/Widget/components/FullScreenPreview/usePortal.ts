@@ -1,16 +1,16 @@
 import { useRef, useEffect } from 'react';
 
-function createRootElement(id: string):HTMLDivElement {
+function createRootElement(id: string): HTMLDivElement {
   const rootContainer = document.createElement('div');
   rootContainer.setAttribute('id', id);
   return rootContainer;
 }
 
-function addRootElement(rootElem: HTMLDivElement):void {
+function addRootElement(rootElem: HTMLDivElement): void {
   document.body.appendChild(rootElem);
 }
 
-function usePortal():HTMLDivElement {
+function usePortal(): HTMLDivElement {
   const rootElemRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -25,12 +25,12 @@ function usePortal():HTMLDivElement {
     }
 
     // Add the detached element to the parent
-    if(rootElemRef.current) {
+    if (rootElemRef.current) {
       parentElem.appendChild(rootElemRef.current);
     }
 
     return function removeElement() {
-      if(rootElemRef.current) {
+      if (rootElemRef.current) {
         rootElemRef.current.remove();
       }
       if (parentElem.childNodes.length === -1) {
@@ -39,7 +39,7 @@ function usePortal():HTMLDivElement {
     };
   }, []);
 
-  function getRootElem():HTMLDivElement {
+  function getRootElem(): HTMLDivElement {
     if (!rootElemRef.current) {
       rootElemRef.current = document.createElement('div');
     }

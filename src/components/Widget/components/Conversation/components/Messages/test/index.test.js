@@ -17,15 +17,13 @@ describe('<Messages />', () => {
   /* eslint-disable react/prop-types */
   const Dummy = ({ text }) => <div>{text}</div>;
   /* eslint-enable */
-  const customComp = createComponentMessage(Dummy, { text: 'This is a Dummy Component!' });
+  const customComp = createComponentMessage(Dummy, {
+    text: 'This is a Dummy Component!'
+  });
 
   const responseMessages = List([message, linkSnippet, customComp]);
 
-  const messagesComponent = shallow(
-    <Messages.WrappedComponent
-      messages={responseMessages}
-    />
-  );
+  const messagesComponent = shallow(<Messages.WrappedComponent messages={responseMessages} />);
 
   it('should render a Message component', () => {
     expect(messagesComponent.find(Message)).toHaveLength(1);

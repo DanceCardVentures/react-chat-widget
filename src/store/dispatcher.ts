@@ -40,7 +40,7 @@ export function isWidgetOpened(): boolean {
   return store.getState().behavior.showChat;
 }
 
-export function setQuickButtons(buttons: Array<{ label: string, value: string | number }>) {
+export function setQuickButtons(buttons: Array<{ label: string; value: string | number }>) {
   store.dispatch(actions.setQuickButtons(buttons));
 }
 

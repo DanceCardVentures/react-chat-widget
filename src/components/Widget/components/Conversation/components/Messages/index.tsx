@@ -10,27 +10,31 @@ import Loader from './components/Loader';
 import './styles.scss';
 
 type Props = {
-  showTimeStamp: boolean,
+  showTimeStamp: boolean;
   profileAvatar?: string;
-}
+};
 
 function Messages({ profileAvatar, showTimeStamp }: Props) {
   const dispatch = useDispatch();
-  const { messages, typing, showChat, badgeCount } = useSelector((state: GlobalState) => ({
+  const { messages, typing, showChat, badgeCount, parameters } = useSelector((state: GlobalState) => ({
     messages: state.messages.messages,
     badgeCount: state.messages.badgeCount,
     typing: state.behavior.messageLoader,
-    showChat: state.behavior.showChat
+    showChat: state.behavior.showChat,
+    parameters: state.dialogConfig.parameters
   }));
 
   const messageRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     // @ts-ignore
     scrollToBottom(messageRef.current);
-    if (showChat && badgeCount) dispatch(markAllMessagesRead());
-    else dispatch(setBadgeCount(messages.filter((message) => message.unread).length));
+    if (showChat && badgeCount) {
+      dispatch(markAllMessagesRead());
+    } else {
+      dispatch(setBadgeCount(messages.filter(message => message.unread).length));
+    }
   }, [messages, badgeCount, showChat]);
-    
+
   const getComponentToRender = (message: Message | Link | CustomCompMessage) => {
     const ComponentToRender = message.component;
     if (message.type === 'component') {
@@ -47,17 +51,38 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
   //   }
   // }
 
+  const defineWidgetHeight = () => {
+    const minimalValue = 300;
+    const restComponentsTotalHeight = 180;
+
+    if (parameters && parameters.chatbotHeight) {
+      const expectedHeight = parameters.chatbotHeight - restComponentsTotalHeight;
+
+      if (expectedHeight < minimalValue) {
+        return minimalValue;
+      }
+
+      return expectedHeight;
+    }
+
+    return minimalValue;
+  };
+
   return (
-    <div id="messages" className="rcw-messages-container" ref={messageRef}>
-      {messages?.map((message, index) =>
+    <div
+      style={{ height: defineWidgetHeight() }}
+      id="messages"
+      className="rcw-messages-container"
+      ref={messageRef}
+    >
+      {messages?.map((message, index) => (
         <div className="rcw-message" key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
-          {profileAvatar &&
-            message.showAvatar &&
+          {profileAvatar && message.showAvatar && (
             <img src={profileAvatar} className="rcw-avatar" alt="profile" />
-          }
+          )}
           {getComponentToRender(message)}
         </div>
-      )}
+      ))}
       <Loader typing={typing} />
     </div>
   );
