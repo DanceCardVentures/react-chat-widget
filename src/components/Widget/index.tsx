@@ -20,15 +20,15 @@ import WidgetLayout from './layout';
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 * */
 
+const integrationId = '1d20328f-b6ef-4ead-a535-90c7e912f725';
+
 const URLS = {
-  dialogScript: 'https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-4.json',
-  widgetLook: 'https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-widget-parameters-4.json'
+  dialogScript: `https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-${integrationId}.json`,
+  widgetLook: `https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-widget-parameters-${integrationId}.json`
 };
 
 function fetchData(url: string) {
-  return fetch(url)
-    .then(response => response.json())
-    .then(data => data);
+  return fetch(url).then(response => response.json());
 }
 
 /* - - - - - - - - - - - - - - - - - - - */

@@ -53,9 +53,10 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
 
   const defineWidgetHeight = () => {
     const minimalValue = 300;
+    const restComponentsTotalHeight = 180;
 
     if (parameters && parameters.chatbotHeight) {
-      const expectedHeight = parameters.chatbotHeight - 180;
+      const expectedHeight = parameters.chatbotHeight - restComponentsTotalHeight;
 
       if (expectedHeight < minimalValue) {
         return minimalValue;

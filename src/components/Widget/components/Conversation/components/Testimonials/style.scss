@@ -1,12 +1,17 @@
 .rcw-testimonials-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
+  position: relative;
+  height: 48px;
   width: 100%;
-  padding: 14px;
+  padding: 16px;
   border-bottom: 1px solid lightgray;
   font-weight: bold;
+
+  svg {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    width: 30px;
+  }
 }
 
 @keyframes blink {
@@ -26,4 +31,23 @@
 
 .rcw-testimonial-label {
   animation: blink 10s ease infinite;
+}
+
+.rcw-testimonials-list {
+  padding-left: 40px;
+
+  li {
+    display: flex;
+    align-items: center;
+    animation: blink 10s ease infinite;
+
+    span:not(.rcw-testimonial-author) {
+      font-style: italic;
+    }
+
+    .rcw-testimonial-author {
+      padding-right: 5px;
+      opacity: 0.8;
+    }
+  }
 }

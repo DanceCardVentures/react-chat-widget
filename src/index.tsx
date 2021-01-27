@@ -6,6 +6,7 @@ import Widget from './components/Widget';
 import store from './store';
 
 import { AnyFunction } from './utils/types';
+import './utils/reset.scss';
 
 type Props = {
   handleNewUserMessage: AnyFunction;

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 import { motion } from 'framer-motion';
 
-import { DialogQuickResponse, GlobalState } from 'src/store/types';
+import { DialogQuickResponse, GlobalState, QuickButton } from 'src/store/types';
 
 import { addUserMessage, addResponseMessage, setDialogActiveMessage } from '../../../../store/actions';
 
@@ -49,22 +49,9 @@ function Conversation({
     parameters: state.dialogConfig.parameters
   }));
 
-  const responsesContainerRef = useRef<any>(null);
-
-  // useEffect(() => {
-  //   document.addEventListener("click", event => {
-  //     if (responsesContainerRef && responsesContainerRef.current) {
-  //       const withinBoundaries = event
-  //         .composedPath()
-  //         .includes((responsesContainerRef.current as unknown) as EventTarget);
-  //       console.log("withinBoundaries: ", withinBoundaries);
-  //     }
-  //   });
-  // }, []);
-
   const dispatch = useDispatch();
 
-  const [responsesListIsVisible, setResponsesListVisibility] = useState(false);
+  const [responsesActiveBlob, setResponsesActiveBlob] = useState(0);
 
   /* - - - - - - - - - - - - - - - - - - - */
 
@@ -74,7 +61,133 @@ function Conversation({
     dispatch(addUserMessage(response.label));
     dispatch(addResponseMessage(nextActiveStep.message));
     dispatch(setDialogActiveMessage(nextActiveStep));
+
+    setResponsesActiveBlob(0);
   };
+
+  const renderResponseItem = (res: DialogQuickResponse) => {
+    const variants = {
+      open: {
+        y: 0,
+        opacity: 1,
+        transition: {
+          y: { stiffness: 500, velocity: -100 }
+        }
+      },
+      closed: {
+        y: 15,
+        opacity: 0,
+        transition: {
+          y: { stiffness: 500 }
+        }
+      }
+    };
+
+    return (
+      <motion.li key={`${res.value}-${res.label.concat('')}`} variants={variants}>
+        <div
+          className="rcw-quick-response-button"
+          style={{
+            background: parameters?.chatOptionButtonBackgroundColor,
+            color: parameters?.chatOptionButtonTextColor
+          }}
+          onClick={() => handleQuickResponseClick(res)}
+        >
+          {res.label}
+        </div>
+      </motion.li>
+    );
+  };
+
+  /* - - - - - - - - - - - - - - - - - - - */
+
+  const renderResponses = () => {
+    if (!activeMessage) {
+      return;
+    }
+
+    const len = activeMessage.quickResponses.length;
+    const responsesPerBlob = 4;
+
+    const blobs = activeMessage.quickResponses.reduce(
+      (blobs: Array<Array<DialogQuickResponse>>, response) => {
+        const lastBlobIndex = blobs.length - 1;
+        const lastBlob = blobs[lastBlobIndex];
+
+        if (!lastBlob) {
+          return [[response]];
+        }
+
+        return lastBlob.length === responsesPerBlob
+          ? [...blobs, [response]]
+          : blobs.map((blob, i) => (i === lastBlobIndex ? [...blob, response] : blob));
+      },
+      []
+    );
+
+    const animationVariants = {
+      open: {
+        opacity: 1,
+        visibility: 'visible',
+        transition: { staggerChildren: 0.07, delayChildren: 0.15 }
+      },
+      closed: {
+        opacity: 0,
+        visibility: 'hidden',
+        transition: { staggerChildren: 0.05, staggerDirection: -1 }
+      }
+    };
+
+    const renderBlobs = () =>
+      blobs.map((blob, i) => (
+        <motion.div
+          animate={i === responsesActiveBlob ? 'open' : 'closed'}
+          // @ts-ignore
+          variants={animationVariants}
+          initial={{ opacity: i === responsesActiveBlob ? 1 : 0 }}
+          className="rcw-responses-animated-container rcw-responses-additional-paddings"
+          key={i}
+        >
+          {blob.map(renderResponseItem)}
+        </motion.div>
+      ));
+
+    switch (len) {
+      case 0:
+        return 'No responses';
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+        return (
+          <div className="rcw-responses-animated-container">
+            {activeMessage.quickResponses.map(renderResponseItem)}
+          </div>
+        );
+      default:
+        return (
+          <>
+            <div className="rcw-responses-nav-container">
+              <button
+                disabled={responsesActiveBlob === 0}
+                onClick={() => setResponsesActiveBlob(counter => counter - 1)}
+              >
+                ↑
+              </button>
+              <button
+                disabled={blobs.length === responsesActiveBlob + 1}
+                onClick={() => setResponsesActiveBlob(counter => counter + 1)}
+              >
+                ↓
+              </button>
+            </div>
+            {renderBlobs()}
+          </>
+        );
+    }
+  };
+
+  /* - - - - - - - - - - - - - - - - - - - */
 
   return (
     <div className={cn('rcw-conversation-container', className)} aria-live="polite">
@@ -89,57 +202,7 @@ function Conversation({
       <Messages profileAvatar={profileAvatar} showTimeStamp={showTimeStamp} />
       <QuickButtons onQuickButtonClicked={onQuickButtonClicked} />
 
-      <motion.ul
-        ref={responsesContainerRef}
-        className="rcw-responses-block"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: responsesListIsVisible ? 1 : 0 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: responsesListIsVisible ? 0.15 : 0 }}
-      >
-        {activeMessage?.quickResponses.map(res => (
-          <li key={`${res.value}-${res.label.concat('')}`}>
-            <div
-              className="rcw-quick-response-button"
-              style={{
-                background: parameters?.chatOptionButtonBackgroundColor,
-                color: parameters?.chatOptionButtonTextColor
-              }}
-              onClick={() => {
-                handleQuickResponseClick(res);
-                setResponsesListVisibility(false);
-              }}
-            >
-              {res.label}
-            </div>
-          </li>
-        ))}
-      </motion.ul>
-
-      <ul className="rcw-quick-responses-list">
-        {activeMessage?.quickResponses.length === 1 ? (
-          <div
-            className="rcw-quick-response-button"
-            style={{
-              background: parameters?.chatOptionButtonBackgroundColor,
-              color: parameters?.chatOptionButtonTextColor
-            }}
-            onClick={() => {
-              handleQuickResponseClick(activeMessage?.quickResponses[0]);
-              setResponsesListVisibility(false);
-            }}
-          >
-            {activeMessage?.quickResponses[0].label}
-          </div>
-        ) : (
-          <button
-            className="rcw-more-replies-button"
-            onClick={() => setResponsesListVisibility(flag => !flag)}
-          >
-            {responsesListIsVisible ? 'Dismiss' : 'More replies'}
-          </button>
-        )}
-      </ul>
+      <ul className="rcw-responses-carousel">{renderResponses()}</ul>
     </div>
   );
 }
