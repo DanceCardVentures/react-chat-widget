@@ -1,13 +1,25 @@
-import React, { useEffect, useRef, useState, ElementRef, ImgHTMLAttributes, MouseEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import format from 'date-fns/format';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  ElementRef,
+  ImgHTMLAttributes,
+  MouseEvent,
+} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import format from "date-fns/format";
 
-import { scrollToBottom } from '../../../../../../utils/messages';
-import { Message, Link, CustomCompMessage, GlobalState } from '../../../../../../store/types';
-import { setBadgeCount, markAllMessagesRead } from '@actions';
+import { scrollToBottom } from "../../../../../../utils/messages";
+import {
+  Message,
+  Link,
+  CustomCompMessage,
+  GlobalState,
+} from "../../../../../../store/types";
+import { setBadgeCount, markAllMessagesRead } from "@actions";
 
-import Loader from './components/Loader';
-import './styles.scss';
+import Loader from "./components/Loader";
+import "./styles.scss";
 
 type Props = {
   showTimeStamp: boolean;
@@ -16,13 +28,15 @@ type Props = {
 
 function Messages({ profileAvatar, showTimeStamp }: Props) {
   const dispatch = useDispatch();
-  const { messages, typing, showChat, badgeCount, parameters } = useSelector((state: GlobalState) => ({
-    messages: state.messages.messages,
-    badgeCount: state.messages.badgeCount,
-    typing: state.behavior.messageLoader,
-    showChat: state.behavior.showChat,
-    parameters: state.dialogConfig.parameters
-  }));
+  const { messages, typing, showChat, badgeCount, parameters } = useSelector(
+    (state: GlobalState) => ({
+      messages: state.messages.messages,
+      badgeCount: state.messages.badgeCount,
+      typing: state.behavior.messageLoader,
+      showChat: state.behavior.showChat,
+      parameters: state.dialogConfig.parameters,
+    })
+  );
 
   const messageRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -31,16 +45,22 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
     if (showChat && badgeCount) {
       dispatch(markAllMessagesRead());
     } else {
-      dispatch(setBadgeCount(messages.filter(message => message.unread).length));
+      dispatch(
+        setBadgeCount(messages.filter((message) => message.unread).length)
+      );
     }
   }, [messages, badgeCount, showChat]);
 
-  const getComponentToRender = (message: Message | Link | CustomCompMessage) => {
+  const getComponentToRender = (
+    message: Message | Link | CustomCompMessage
+  ) => {
     const ComponentToRender = message.component;
-    if (message.type === 'component') {
+    if (message.type === "component") {
       return <ComponentToRender {...message.props} />;
     }
-    return <ComponentToRender message={message} showTimeStamp={showTimeStamp} />;
+    return (
+      <ComponentToRender message={message} showTimeStamp={showTimeStamp} />
+    );
   };
 
   // TODO: Fix this function or change to move the avatar to last message from response
@@ -56,7 +76,8 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
     const restComponentsTotalHeight = 180;
 
     if (parameters && parameters.chatbotHeight) {
-      const expectedHeight = parameters.chatbotHeight - restComponentsTotalHeight;
+      const expectedHeight =
+        parameters.chatbotHeight - restComponentsTotalHeight;
 
       if (expectedHeight < minimalValue) {
         return minimalValue;
@@ -76,7 +97,10 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
       ref={messageRef}
     >
       {messages?.map((message, index) => (
-        <div className="rcw-message" key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
+        <div
+          className="rcw-message"
+          key={`${index}-${format(message.timestamp, "hh:mm")}`}
+        >
           {profileAvatar && message.showAvatar && (
             <img src={profileAvatar} className="rcw-avatar" alt="profile" />
           )}
