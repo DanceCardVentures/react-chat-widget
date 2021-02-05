@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { QuickButton } from 'src/store/types';
+import { QuickButton as QuickButtonType } from 'src/store/types';
 import './styles.scss';
 
 type Props = {
-  button: QuickButton;
+  button: QuickButtonType;
   onQuickButtonClicked: (event: any, value: string | number) => any;
 };
 

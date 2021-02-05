@@ -1,4 +1,4 @@
-import { ElementType } from 'react';
+import { ElementType } from "react";
 
 type BaseMessage = {
   type: string;
@@ -53,7 +53,7 @@ export type Testimonial = {
 };
 
 export interface DialogConfig {
-  firstStepId: string | undefined;
+  firstStepId: string;
   script: object;
   credibilityBuilders: string[];
   testimonials: Testimonial[];
