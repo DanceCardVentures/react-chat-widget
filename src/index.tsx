@@ -1,59 +1,15 @@
-import React from 'react';
-import { Provider } from 'react-redux';
+import React from "react";
+import { render, unmountComponentAtNode } from "react-dom";
+import App from "./App";
 
-import Widget from './components/Widget';
+const MOUNT_NODE = document.getElementById("dancecard-leadnurturing-chatbot");
 
-import store from './store';
+render(<App />, MOUNT_NODE);
 
-import { AnyFunction } from './utils/types';
-import './utils/reset.scss';
-
-type Props = {
-  handleNewUserMessage: AnyFunction;
-  handleQuickButtonClicked?: AnyFunction;
-  title?: string;
-  titleAvatar?: string;
-  subtitle?: string;
-  senderPlaceHolder?: string;
-  showCloseButton?: boolean;
-  fullScreenMode?: boolean;
-  autofocus?: boolean;
-  profileAvatar?: string;
-  launcher?: AnyFunction;
-  handleTextInputChange?: (event: any) => void;
-  chatId?: string;
-  launcherOpenLabel?: string;
-  launcherCloseLabel?: string;
-  sendButtonAlt?: string;
-  showTimeStamp?: boolean;
-  imagePreview?: boolean;
-  zoomStep?: number;
-  handleSubmit?: AnyFunction;
-} & typeof defaultProps;
-
-function ConnectedWidget(props: Props) {
-  return (
-    <Provider store={store}>
-      <Widget {...props} />
-    </Provider>
-  );
+if (module.hot) {
+  module.hot.accept(["./App"], () => {
+    unmountComponentAtNode(MOUNT_NODE);
+    const NextApp = require("./App").default;
+    render(<NextApp />, MOUNT_NODE);
+  });
 }
-
-const defaultProps = {
-  title: 'Welcome',
-  subtitle: 'This is your chat subtitle',
-  senderPlaceHolder: 'Type a message...',
-  showCloseButton: true,
-  fullScreenMode: false,
-  autofocus: true,
-  chatId: 'rcw-chat-container',
-  launcherOpenLabel: 'Open chat',
-  launcherCloseLabel: 'Close chat',
-  sendButtonAlt: 'Send',
-  showTimeStamp: true,
-  imagePreview: false,
-  zoomStep: 80
-};
-ConnectedWidget.defaultProps = defaultProps;
-
-export default ConnectedWidget;

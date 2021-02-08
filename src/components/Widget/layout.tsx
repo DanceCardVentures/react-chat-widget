@@ -143,16 +143,7 @@ function WidgetLayout({
               closeLabel={launcherCloseLabel}
             />
           )}
-      {imagePreview && (
-        <FullScreenPreview
-          fullScreenMode={fullScreenMode}
-          zoomStep={zoomStep}
-        />
-      )}
-
-      {/* {imagePreview && (
-        <FullScreenPreview fullScreenMode={true} zoomStep={zoomStep} />
-      )} */}
+      <FullScreenPreview fullScreenMode={fullScreenMode} zoomStep={zoomStep} />
     </div>
   );
 }

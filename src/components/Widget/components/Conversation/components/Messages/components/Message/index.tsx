@@ -9,12 +9,12 @@ import markdownItLinkAttributes from "markdown-it-link-attributes";
 
 import { openFullscreenPreview } from "@actions";
 
-import { GlobalState, Message } from "src/store/types";
+import { GlobalState, Message as MessageType } from "src/store/types";
 
 import "./styles.scss";
 
 type Props = {
-  message: Message;
+  message: MessageType;
   showTimeStamp: boolean;
 };
 
