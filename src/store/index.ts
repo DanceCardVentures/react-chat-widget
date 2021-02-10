@@ -1,25 +1,30 @@
-import { createStore, combineReducers, compose } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createLogger } from "redux-logger";
 
-import dialogConfig from './reducers/dialogConfigReducer';
-import behavior from './reducers/behaviorReducer';
-import messages from './reducers/messagesReducer';
-import quickButtons from './reducers/quickButtonsReducer';
-import preview from './reducers/fullscreenPreviewReducer';
+import dialogConfig from "./reducers/dialogConfigReducer";
+import behavior from "./reducers/behaviorReducer";
+import messages from "./reducers/messagesReducer";
+import quickButtons from "./reducers/quickButtonsReducer";
+import preview from "./reducers/fullscreenPreviewReducer";
 
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
+import { createPreloadedState } from "../utils/store";
 
-const composeEnhancers =
-  (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 const reducer = combineReducers({
   dialogConfig,
   behavior,
   messages,
   quickButtons,
-  preview
+  preview,
 });
 
-export default createStore(reducer, composeEnhancers());
+function middlewaresCreator() {
+  const logger = createLogger({});
+
+  return [logger];
+}
+
+export default createStore(
+  reducer,
+  createPreloadedState()
+  // applyMiddleware(...middlewaresCreator())
+);

@@ -17,5 +17,6 @@ module.exports = merge(common, {
     port: 5000,
     hot: true,
     historyApiFallback: true,
+    clientLogLevel: "silent",
   },
 });

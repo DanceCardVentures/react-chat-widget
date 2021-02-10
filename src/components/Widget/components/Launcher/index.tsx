@@ -45,7 +45,7 @@ function Launcher({ toggle, chatId, openLabel, closeLabel }: Props) {
       onClick={toggleChat}
       aria-controls={chatId}
     >
-      {!showChat && <Badge badge={badgeCount} />}
+      {/* {!showChat && <Badge badge={badgeCount} />} */}
       {showChat ? (
         <img src={close} className="rcw-close-launcher" alt={openLabel} />
       ) : (

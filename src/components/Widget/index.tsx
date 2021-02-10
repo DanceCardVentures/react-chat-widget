@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { DialogConfig, GlobalState } from "../../store/types";
+import { DialogConfig, WidgetParameters, GlobalState } from "../../store/types";
 
 import {
   toggleChat,
@@ -12,6 +12,9 @@ import {
   addResponseMessage,
 } from "../../store/actions";
 import { AnyFunction } from "../../utils/types";
+import { makeLocalStorageSync } from "../../utils/localStorage";
+
+import { LOCAL_STORAGE_KEY } from "../../constants";
 
 import WidgetLayout from "./layout";
 
@@ -19,6 +22,11 @@ import WidgetLayout from "./layout";
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 * */
+
+type WidgetData = {
+  widgetParameters: WidgetParameters;
+  dialogConfig: DialogConfig;
+};
 
 const integrationId = "1d20328f-b6ef-4ead-a535-90c7e912f725";
 
@@ -57,8 +65,9 @@ type Props = {
 };
 
 function Widget(props: Props) {
-  const { parameters } = useSelector((state: GlobalState) => ({
+  const { parameters, showChat } = useSelector((state: GlobalState) => ({
     parameters: state.dialogConfig.parameters,
+    showChat: state.behavior.showChat,
   }));
 
   const {
@@ -81,6 +90,14 @@ function Widget(props: Props) {
         const dialogConfig = script as DialogConfig;
         const firstStep = dialogConfig.script[dialogConfig.firstStepId];
 
+        makeLocalStorageSync<WidgetData>({
+          dataToSync: {
+            dialogConfig,
+            widgetParameters,
+          },
+          key: LOCAL_STORAGE_KEY,
+        });
+
         dispatch(setDialogConfig(dialogConfig));
         dispatch(setWidgetParameters(widgetParameters));
         dispatch(setDialogActiveMessage(firstStep));
@@ -95,7 +112,9 @@ function Widget(props: Props) {
 
   useEffect(() => {
     if (parameters && parameters.autoopenChatbot) {
-      dispatch(toggleChat());
+      if (!showChat) {
+        dispatch(toggleChat());
+      }
     }
   }, [parameters]);
 
