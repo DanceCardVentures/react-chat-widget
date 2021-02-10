@@ -9,7 +9,7 @@ export function addUserMessage(text: string, id?: string) {
 }
 
 export function addResponseMessage(text: string, id?: string) {
-  store.dispatch(actions.addResponseMessage(text, id));
+  store.dispatch(actions.addResponseMessage({ text, id }));
 }
 
 export function addLinkSnippet(link: LinkParams, id?: string) {

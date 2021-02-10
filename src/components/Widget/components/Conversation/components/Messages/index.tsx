@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  ElementRef,
-  ImgHTMLAttributes,
-  MouseEvent,
-} from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import format from "date-fns/format";
 
@@ -20,6 +13,11 @@ import { setBadgeCount, markAllMessagesRead } from "@actions";
 
 import Loader from "./components/Loader";
 import "./styles.scss";
+
+/*
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+* */
 
 type Props = {
   showTimeStamp: boolean;
@@ -55,21 +53,13 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
     message: Message | Link | CustomCompMessage
   ) => {
     const ComponentToRender = message.component;
-    if (message.type === "component") {
+
+    if (message.type === "component")
       return <ComponentToRender {...message.props} />;
-    }
     return (
       <ComponentToRender message={message} showTimeStamp={showTimeStamp} />
     );
   };
-
-  // TODO: Fix this function or change to move the avatar to last message from response
-  // const shouldRenderAvatar = (message: Message, index: number) => {
-  //   const previousMessage = messages[index - 1];
-  //   if (message.showAvatar && previousMessage.showAvatar) {
-  //     dispatch(hideAvatar(index));
-  //   }
-  // }
 
   const defineWidgetHeight = () => {
     const minimalValue = 300;
@@ -96,17 +86,19 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
       className="rcw-messages-container"
       ref={messageRef}
     >
-      {messages?.map((message, index) => (
-        <div
-          className="rcw-message"
-          key={`${index}-${format(message.timestamp, "hh:mm")}`}
-        >
-          {profileAvatar && message.showAvatar && (
-            <img src={profileAvatar} className="rcw-avatar" alt="profile" />
-          )}
-          {getComponentToRender(message)}
-        </div>
-      ))}
+      {messages?.map((message, index) => {
+        return (
+          <div
+            className="rcw-message"
+            key={`${index}-${format(message.timestamp, "hh:mm")}`}
+          >
+            {profileAvatar && message.showAvatar && (
+              <img src={profileAvatar} className="rcw-avatar" alt="profile" />
+            )}
+            {getComponentToRender(message)}
+          </div>
+        );
+      })}
       <Loader typing={typing} />
     </div>
   );

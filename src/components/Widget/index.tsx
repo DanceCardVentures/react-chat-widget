@@ -101,7 +101,12 @@ function Widget(props: Props) {
         dispatch(setDialogConfig(dialogConfig));
         dispatch(setWidgetParameters(widgetParameters));
         dispatch(setDialogActiveMessage(firstStep));
-        dispatch(addResponseMessage(firstStep.message));
+        dispatch(
+          addResponseMessage({
+            text: firstStep.message,
+            wistiaMatcher: firstStep.wistiaMatcher,
+          })
+        );
       }
     );
   }

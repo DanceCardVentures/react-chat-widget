@@ -1,14 +1,28 @@
-import { ElementType } from 'react';
+import { ElementType } from "react";
 
-import { Message as MessageI, Link, CustomCompMessage, LinkParams } from '../store/types';
+import {
+  Message as MessageI,
+  Link,
+  CustomCompMessage,
+  LinkParams,
+} from "../store/types";
 
-import Message from '../components/Widget/components/Conversation/components/Messages/components/Message';
-import Snippet from '../components/Widget/components/Conversation/components/Messages/components/Snippet';
-import QuickButton from '../components/Widget/components/Conversation/components/QuickButtons/components/QuickButton';
+import Message from "../components/Widget/components/Conversation/components/Messages/components/Message";
+import Snippet from "../components/Widget/components/Conversation/components/Messages/components/Snippet";
+import QuickButton from "../components/Widget/components/Conversation/components/QuickButtons/components/QuickButton";
 
-import { MESSAGES_TYPES, MESSAGE_SENDER, MESSAGE_BOX_SCROLL_DURATION } from '../constants';
+import {
+  MESSAGES_TYPES,
+  MESSAGE_SENDER,
+  MESSAGE_BOX_SCROLL_DURATION,
+} from "../constants";
 
-export function createNewMessage(text: string, sender: string, id?: string): MessageI {
+export function createNewMessage(
+  text: string,
+  sender: string,
+  id?: string,
+  wistiaMatcher?: string
+): MessageI {
   return {
     type: MESSAGES_TYPES.TEXT,
     component: Message,
@@ -17,7 +31,8 @@ export function createNewMessage(text: string, sender: string, id?: string): Mes
     timestamp: new Date(),
     showAvatar: sender === MESSAGE_SENDER.RESPONSE,
     customId: id,
-    unread: sender === MESSAGE_SENDER.RESPONSE
+    unread: sender === MESSAGE_SENDER.RESPONSE,
+    wistiaMatcher,
   };
 }
 
@@ -27,12 +42,12 @@ export function createLinkSnippet(link: LinkParams, id?: string): Link {
     component: Snippet,
     title: link.title,
     link: link.link,
-    target: link.target || '_blank',
+    target: link.target || "_blank",
     sender: MESSAGE_SENDER.RESPONSE,
     timestamp: new Date(),
     showAvatar: true,
     customId: id,
-    unread: true
+    unread: true,
   };
 }
 
@@ -50,22 +65,29 @@ export function createComponentMessage(
     timestamp: new Date(),
     showAvatar,
     customId: id,
-    unread: true
+    unread: true,
   };
 }
 
-export function createQuickButton(button: { label: string; value: string | number }) {
+export function createQuickButton(button: {
+  label: string;
+  value: string | number;
+}) {
   return {
     component: QuickButton,
     label: button.label,
-    value: button.value
+    value: button.value,
   };
 }
 
 // TODO: Clean functions and window use for SSR
 
 function sinEaseOut(timestamp: any, begining: any, change: any, duration: any) {
-  return change * ((timestamp = timestamp / duration - 1) * timestamp * timestamp + 1) + begining;
+  return (
+    change *
+      ((timestamp = timestamp / duration - 1) * timestamp * timestamp + 1) +
+    begining
+  );
 }
 
 /**
@@ -77,11 +99,16 @@ function sinEaseOut(timestamp: any, begining: any, change: any, duration: any) {
 function scrollWithSlowMotion(target: any, scrollStart: any, scroll: number) {
   const raf = window?.requestAnimationFrame;
   let start = 0;
-  const step = timestamp => {
+  const step = (timestamp) => {
     if (!start) {
       start = timestamp;
     }
-    const stepScroll = sinEaseOut(timestamp - start, 0, scroll, MESSAGE_BOX_SCROLL_DURATION);
+    const stepScroll = sinEaseOut(
+      timestamp - start,
+      0,
+      scroll,
+      MESSAGE_BOX_SCROLL_DURATION
+    );
     const total = scrollStart + stepScroll;
     target.scrollTop = total;
     if (total < scrollStart + scroll) {

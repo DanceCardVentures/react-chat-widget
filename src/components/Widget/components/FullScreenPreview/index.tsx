@@ -28,8 +28,9 @@ export default function FullScreenPreview({ fullScreenMode, zoomStep }: Props) {
   } = usePreview(zoomStep);
 
   const dispatch = useDispatch();
-  const { src, alt, width, height, visible } = useSelector(
+  const { videoMatcher, src, width, height, visible } = useSelector(
     (state: GlobalState) => ({
+      videoMatcher: state.preview.videoMatcher,
       src: state.preview.src,
       alt: state.preview.alt,
       width: state.preview.width,
@@ -53,12 +54,21 @@ export default function FullScreenPreview({ fullScreenMode, zoomStep }: Props) {
   const childNode: ReactNode = (
     <div className="rcw-previewer-container">
       <div className="rcw-previewer-veil">
-        {/* <img {...state.layout} src={src} className="rcw-previewer-image" alt={alt} /> */}
-
-        <video width={width} height={height} controls>
-          <source src={src} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <iframe
+          src={`//fast.wistia.net/embed/iframe/${videoMatcher}`}
+          allowtransparency="true"
+          frameborder="0"
+          scrolling="no"
+          class="wistia_embed"
+          name="wistia_embed"
+          allowfullscreen
+          mozallowfullscreen
+          webkitallowfullscreen
+          oallowfullscreen
+          msallowfullscreen
+          width="720"
+          height="480"
+        />
       </div>
       <button
         className="rcw-previewer-button rcw-previewer-close-button"

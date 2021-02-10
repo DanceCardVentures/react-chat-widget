@@ -9,6 +9,7 @@ type BaseMessage = {
   unread: boolean;
   customId?: string;
   props?: any;
+  wistiaMatcher?: string;
 };
 
 export interface Message extends BaseMessage {
@@ -108,6 +109,7 @@ export interface ImageState {
 
 export interface FullscreenPreviewState extends ImageState {
   visible?: boolean;
+  videoMatcher: string;
 }
 
 export interface GlobalState {
