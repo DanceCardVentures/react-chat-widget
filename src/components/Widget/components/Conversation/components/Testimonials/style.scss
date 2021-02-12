@@ -1,10 +1,19 @@
 .rcw-testimonials-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   position: relative;
   height: 48px;
   width: 100%;
   padding: 16px;
   border-bottom: 1px solid lightgray;
   font-weight: bold;
+
+  &.rcw-testimonial-container-launcher-embedded {
+    justify-content: center;
+    color: #fff;
+    border: 0;
+  }
 
   svg {
     position: absolute;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
+import cn from "classnames";
 
 import { GlobalState, Testimonial } from "@types";
 
@@ -57,7 +58,7 @@ function constructSamples(
   return samples;
 }
 
-function Testimonials() {
+function Testimonials({ isLaunerEmbdded }: { isLaunerEmbdded?: boolean }) {
   const { dialogConfig, parameters } = useSelector((state: GlobalState) => ({
     dialogConfig: state.dialogConfig.config,
     parameters: state.dialogConfig.parameters,
@@ -70,7 +71,7 @@ function Testimonials() {
       constructSamples(
         dialogConfig?.credibilityBuilders,
         dialogConfig?.testimonials,
-        parameters?.titleBackgroundColor
+        isLaunerEmbdded ? "#FFF" : parameters?.titleBackgroundColor
       ),
     []
   );
@@ -85,8 +86,15 @@ function Testimonials() {
   }, []);
 
   return (
-    <div className="rcw-testimonials-container">
-      {renderTestimonialsIcon(parameters?.titleBackgroundColor)}
+    <div
+      className={cn(
+        "rcw-testimonials-container",
+        isLaunerEmbdded && "rcw-testimonial-container-launcher-embedded"
+      )}
+    >
+      {renderTestimonialsIcon(
+        isLaunerEmbdded ? "#FFF" : parameters?.titleBackgroundColor
+      )}
       <ul className="rcw-testimonials-list">{samples[currentIndex]}</ul>
     </div>
   );

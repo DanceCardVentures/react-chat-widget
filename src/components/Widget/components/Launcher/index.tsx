@@ -1,17 +1,15 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import cn from "classnames";
+import { useSelector } from "react-redux";
 
-import Badge from "./components/Badge";
+import { motion } from "framer-motion";
+
 import { GlobalState } from "../../../../store/types";
-import { setBadgeCount } from "../../../../store/actions";
+
+import Testimonials from "src/components/Widget/components/Conversation/components/Testimonials";
 
 import "./style.scss";
 
-const openLauncher = require("../../../../../assets/launcher_button.svg")
-  .default as string;
-const close = require("../../../../../assets/clear-button.svg")
-  .default as string;
+import clsoseIconSrc from "../../../../../assets/close-icon.svg";
 
 type Props = {
   toggle: () => void;
@@ -20,42 +18,44 @@ type Props = {
   closeLabel: string;
 };
 
-function Launcher({ toggle, chatId, openLabel, closeLabel }: Props) {
-  const dispatch = useDispatch();
-  const { showChat, badgeCount, parameters } = useSelector(
-    (state: GlobalState) => ({
-      showChat: state.behavior.showChat,
-      badgeCount: state.messages.badgeCount,
-      parameters: state.dialogConfig.parameters,
-    })
-  );
+function Launcher({ toggle }: Props) {
+  const { showChat, parameters } = useSelector((state: GlobalState) => ({
+    showChat: state.behavior.showChat,
+    parameters: state.dialogConfig.parameters,
+  }));
 
-  const toggleChat = () => {
-    toggle();
-    if (!showChat) {
-      dispatch(setBadgeCount(0));
-    }
+  const buttonVarianst = {
+    fullWidth: {
+      width: 275,
+      height: 52,
+      borderRadius: 12,
+      transition: { delayChildren: 0.1 },
+    },
+    collapsed: { width: 52, height: 52, borderRadius: 30 },
+  };
+
+  const contentHolderVariants = {
+    fullWidth: { opacity: 1, transition: { duration: 0.2 } },
+    collapsed: { opacity: 0, transition: { duration: 0 } },
   };
 
   return (
-    <button
-      style={{ background: parameters?.openButtonColor }}
-      type="button"
-      className={cn("rcw-launcher", { "rcw-hide-sm": showChat })}
-      onClick={toggleChat}
-      aria-controls={chatId}
-    >
-      {/* {!showChat && <Badge badge={badgeCount} />} */}
-      {showChat ? (
-        <img src={close} className="rcw-close-launcher" alt={openLabel} />
-      ) : (
-        <img
-          src={openLauncher}
-          className="rcw-open-launcher"
-          alt={closeLabel}
-        />
-      )}
-    </button>
+    <div className="rcw-laucner-button-holder">
+      <motion.button
+        style={{ background: parameters?.openButtonColor }}
+        className="rcw-launcher-animated-button"
+        initial={showChat ? buttonVarianst.collapsed : buttonVarianst.fullWidth}
+        onClick={toggle}
+        animate={showChat ? "collapsed" : "fullWidth"}
+        variants={buttonVarianst}
+      >
+        {showChat && <img src={clsoseIconSrc} alt="Close" />}
+
+        <motion.div variants={contentHolderVariants}>
+          <Testimonials isLaunerEmbdded />
+        </motion.div>
+      </motion.button>
+    </div>
   );
 }
 
