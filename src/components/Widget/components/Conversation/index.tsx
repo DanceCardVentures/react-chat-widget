@@ -45,7 +45,6 @@ function Conversation({
   profileAvatar,
   titleAvatar,
   onQuickButtonClicked,
-  showTimeStamp,
 }: Props) {
   const { dialogConfig, activeMessage, parameters } = useSelector(
     (state: GlobalState) => ({

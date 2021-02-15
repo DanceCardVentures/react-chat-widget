@@ -1,6 +1,33 @@
-@import 'common';
-@import 'variables/colors';
-@import 'animation';
+@import "common";
+@import "variables/colors";
+@import "animation";
+
+.rcw-laucner-button-holder {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.rcw-launcher-animated-button {
+  position: relative;
+  top: 10px;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  border: 0;
+
+  &:hover {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+
+  img {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 18px;
+  }
+}
 
 .rcw-launcher {
   @include animation(0, 0.5s, slide-in);
@@ -28,7 +55,7 @@
   @include animation(0, 0.5s, rotation-lr);
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 800px) {
   .rcw-launcher {
     @include launcher-fs;
   }
