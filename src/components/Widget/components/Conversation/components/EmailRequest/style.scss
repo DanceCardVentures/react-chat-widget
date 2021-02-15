@@ -1,0 +1,86 @@
+.rcw-email-request-holder {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  padding: 25px 0;
+  background: #fff;
+  border-radius: 8px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+
+    input {
+      width: 230px;
+      height: 40px;
+      padding-left: 8px;
+      font-size: 15px;
+      border-radius: 8px;
+      border: 1px solid rgb(199, 199, 199);
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    section {
+      display: flex;
+      flex-direction: column;
+
+      button {
+        width: 242px;
+        height: 43px;
+        font-size: 15px;
+        border-radius: 8px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        color: grey;
+        outline: none;
+        transition: 0.2s ease;
+
+        &:hover {
+          color: black;
+        }
+
+        &.rcw-email-request-submit-button {
+          margin-bottom: 15px;
+          background: rgb(85, 145, 252);
+          color: #fff;
+
+          &:hover {
+            color: #fff;
+            background: rgb(57, 112, 207);
+          }
+        }
+      }
+    }
+  }
+}
+
+.rcw-email-request-description {
+  max-width: 80%;
+  font-size: 17px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.rcw-mailbox-icon-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 25%;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+
+  img {
+    width: 90px;
+    height: 90px;
+  }
+}

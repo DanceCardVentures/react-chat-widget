@@ -9,16 +9,19 @@ import {
   addUserMessage,
   addResponseMessage,
   setDialogActiveMessage,
-} from "../../../../store/actions";
+} from "src/store/actions";
 
 import Header from "./components/Header";
 import Messages from "./components/Messages";
 import QuickButtons from "./components/QuickButtons";
 import Testimonials from "./components/Testimonials";
+import EmailRequest from "./components/EmailRequest";
 
-import { AnyFunction } from "../../../../utils/types";
+import { AnyFunction } from "src/utils/types";
 
 import "./style.scss";
+
+/* - - - - - - - - - - - - - - - - - - - - - */
 
 type Props = {
   title: string;
@@ -209,6 +212,8 @@ function Conversation({
       className={cn("rcw-conversation-container", className)}
       aria-live="polite"
     >
+      <EmailRequest />
+
       <Header
         title={parameters ? parameters.title : ""}
         subtitle={parameters ? parameters.subTitle : ""}

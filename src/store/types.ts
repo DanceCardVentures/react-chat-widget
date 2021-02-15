@@ -46,6 +46,7 @@ export interface DialogQuickResponse {
 export interface DialogActiveMessage {
   message: string;
   quickResponses: DialogQuickResponse[];
+  shouldRequestForEmail?: boolean;
 }
 
 export type Testimonial = {
