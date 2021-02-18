@@ -5,7 +5,10 @@ import { motion } from "framer-motion";
 
 import { GlobalState } from "src/store/types";
 
+import { defineWidgetHeight } from "src/components/Widget/components/Conversation/components/Messages";
+
 import malboxIconSrc from "../../../../../../../assets/mailbox.png";
+import doneIconSrc from "../../../../../../../assets/done-icon.svg";
 
 import "./style.scss";
 
@@ -24,7 +27,25 @@ const animationVariants = {
     opacity: 0,
     visibility: "hidden",
     transition: {
-      duration: 0.2,
+      duration: 0,
+      delay: 0.25,
+    },
+  },
+};
+
+const animationVariantsThanks = {
+  visible: {
+    opacity: 1,
+    visibility: "visible",
+    transition: {
+      duration: 0.1,
+    },
+  },
+  hidden: {
+    opacity: 0,
+    visibility: "hidden",
+    transition: {
+      duration: 0.1,
     },
   },
 };
@@ -38,6 +59,7 @@ function EmailRequest() {
   const [emailValue, setEmailValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [showThanksPage, setShowThanksPage] = useState(false);
 
   function handleSendEmail(e: React.FormEvent) {
     e.preventDefault();
@@ -59,6 +81,7 @@ function EmailRequest() {
     })
       .then(() => {
         setIsComplete(true);
+        setShowThanksPage(true);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -68,45 +91,77 @@ function EmailRequest() {
 
   const style = {
     width: parameters?.chatbotWidth,
-    height: parameters?.chatbotHeight ? parameters?.chatbotHeight + 80 : 500,
+    height: parameters?.chatbotHeight
+      ? defineWidgetHeight(parameters?.chatbotHeight) + 278
+      : 500,
   };
 
   return (
-    <motion.div
-      className="rcw-email-request-holder"
-      style={style}
-      initial={false}
-      variants={animationVariants}
-      animate={
-        !isComplete && activeMessage?.shouldRequestForEmail
-          ? "visible"
-          : "hidden"
-      }
-    >
-      <div className="rcw-mailbox-icon-holder">
-        <img src={malboxIconSrc} alt="Mailbox" />
-      </div>
+    <React.Fragment>
+      <motion.div
+        className="rcw-email-request-holder"
+        style={style}
+        initial={false}
+        variants={animationVariants}
+        animate={
+          !isComplete && activeMessage?.shouldRequestForEmail
+            ? "visible"
+            : "hidden"
+        }
+      >
+        <div className="rcw-mailbox-icon-holder">
+          <img src={malboxIconSrc} alt="Mailbox" />
+        </div>
 
-      <p className="rcw-email-request-description">{activeMessage?.message}</p>
+        <p className="rcw-email-request-description">
+          {activeMessage?.message}
+        </p>
 
-      <form onSubmit={handleSendEmail}>
-        <input
-          required
-          type="email"
-          placeholder="Email address"
-          value={emailValue}
-          onChange={(e) => setEmailValue(e.target.value)}
-        />
-        <section>
-          <button type="submit" className="rcw-email-request-submit-button">
-            <span>{isLoading ? "Sending..." : "Send"}</span>
-          </button>
-          <button onClick={() => setIsComplete(true)} type="button">
-            Cancel
-          </button>
-        </section>
-      </form>
-    </motion.div>
+        <form onSubmit={handleSendEmail}>
+          <input
+            required
+            type="email"
+            placeholder="Email address"
+            value={emailValue}
+            onChange={(e) => setEmailValue(e.target.value)}
+          />
+          <section>
+            <button type="submit" className="rcw-email-request-submit-button">
+              {isLoading ? "Sending..." : "Send"}
+            </button>
+            <button onClick={() => setIsComplete(true)} type="button">
+              Cancel
+            </button>
+          </section>
+        </form>
+      </motion.div>
+
+      <motion.div
+        className="rcw-email-request-holder"
+        style={style}
+        initial={false}
+        variants={animationVariantsThanks}
+        animate={showThanksPage ? "visible" : "hidden"}
+      >
+        <div className="rcw-mailbox-icon-holder">
+          <img src={doneIconSrc} alt="Done" />
+        </div>
+
+        <p className="rcw-email-request-description">Thanks!</p>
+
+        <form>
+          <section>
+            <button
+              type="button"
+              className="rcw-email-request-submit-button"
+              onClick={() => setShowThanksPage(false)}
+            >
+              Done
+            </button>
+          </section>
+        </form>
+      </motion.div>
+    </React.Fragment>
   );
 }
 
