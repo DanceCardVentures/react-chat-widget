@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 
 import { GlobalState } from "src/store/types";
+
+import { toggleShowEmailRequestPopup } from "src/store/dispatcher";
 
 import { defineWidgetHeight } from "src/components/Widget/components/Conversation/components/Messages";
 
@@ -51,14 +53,18 @@ const animationVariantsThanks = {
 };
 
 function EmailRequest() {
-  const { parameters, activeMessage } = useSelector((state: GlobalState) => ({
-    activeMessage: state.dialogConfig.activeMessage,
-    parameters: state.dialogConfig.parameters,
-  }));
+  const { parameters, activeMessage, showPopup } = useSelector(
+    (state: GlobalState) => ({
+      activeMessage: state.dialogConfig.activeMessage,
+      parameters: state.dialogConfig.parameters,
+      showPopup: state.behavior.showEmailRequestPopup,
+    })
+  );
+
+  const dispatch = useDispatch();
 
   const [emailValue, setEmailValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
   const [showThanksPage, setShowThanksPage] = useState(false);
 
   function handleSendEmail(e: React.FormEvent) {
@@ -80,9 +86,9 @@ function EmailRequest() {
       }),
     })
       .then(() => {
-        setIsComplete(true);
         setShowThanksPage(true);
         setIsLoading(false);
+        dispatch(toggleShowEmailRequestPopup);
       })
       .catch((err) => {
         console.error(err);
@@ -104,7 +110,7 @@ function EmailRequest() {
         initial={false}
         variants={animationVariants}
         animate={
-          !isComplete && activeMessage?.shouldRequestForEmail
+          showPopup && activeMessage?.shouldRequestForEmail
             ? "visible"
             : "hidden"
         }
@@ -129,7 +135,10 @@ function EmailRequest() {
             <button type="submit" className="rcw-email-request-submit-button">
               {isLoading ? "Sending..." : "Send"}
             </button>
-            <button onClick={() => setIsComplete(true)} type="button">
+            <button
+              onClick={() => dispatch(toggleShowEmailRequestPopup())}
+              type="button"
+            >
               Cancel
             </button>
           </section>

@@ -82,6 +82,12 @@ export function toggleMsgLoader(): actionsTypes.ToggleMsgLoader {
   };
 }
 
+export function toggleShowEmailRequestPopup(): actionsTypes.ToggleShowEmailRequestPopup {
+  return {
+    type: actionsTypes.TOGGLE_SHOW_EMAIL_REQUEST_POPUP,
+  };
+}
+
 export function addLinkSnippet(
   link: LinkParams,
   id?: string

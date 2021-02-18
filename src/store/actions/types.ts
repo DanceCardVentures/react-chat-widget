@@ -17,6 +17,8 @@ export const TOGGLE_CHAT = "BEHAVIOR/TOGGLE_CHAT";
 export const TOGGLE_INPUT_DISABLED = "BEHAVIOR/TOGGLE_INPUT_DISABLED";
 export const TOGGLE_MESSAGE_LOADER = "BEHAVIOR/TOGGLE_MSG_LOADER";
 export const SET_BADGE_COUNT = "BEHAVIOR/SET_BADGE_COUNT";
+export const TOGGLE_SHOW_EMAIL_REQUEST_POPUP =
+  "BEHAVIOR/TOGGLE_SHOW_EMAIL_REQUEST_POPUP";
 export const ADD_NEW_USER_MESSAGE = "MESSAGES/ADD_NEW_USER_MESSAGE";
 export const ADD_NEW_RESPONSE_MESSAGE = "MESSAGES/ADD_NEW_RESPONSE_MESSAGE";
 export const ADD_NEW_LINK_SNIPPET = "MESSAGES/ADD_NEW_LINK_SNIPPET";
@@ -69,6 +71,10 @@ export interface AddResponseMessage {
 
 export interface ToggleMsgLoader {
   type: typeof TOGGLE_MESSAGE_LOADER;
+}
+
+export interface ToggleShowEmailRequestPopup {
+  type: typeof TOGGLE_SHOW_EMAIL_REQUEST_POPUP;
 }
 
 export interface AddLinkSnippet {

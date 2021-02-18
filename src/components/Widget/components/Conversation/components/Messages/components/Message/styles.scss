@@ -38,9 +38,10 @@
 
 /* For markdown elements created with default styles */
 .rcw-message-text {
+  line-height: 1.45;
+
   p {
     margin: 0;
-    line-height: 1.45;
   }
 
   img {

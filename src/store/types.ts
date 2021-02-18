@@ -90,6 +90,7 @@ export interface BehaviorState {
   showChat: boolean;
   disabledInput: boolean;
   messageLoader: boolean;
+  showEmailRequestPopup: boolean;
 }
 
 export interface MessagesState {

@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { createLogger } from "redux-logger";
+import thunk from "redux-thunk";
 
 import dialogConfig from "./reducers/dialogConfigReducer";
 import behavior from "./reducers/behaviorReducer";
@@ -20,11 +21,11 @@ const reducer = combineReducers({
 function middlewaresCreator() {
   const logger = createLogger({});
 
-  return [logger];
+  return [thunk];
 }
 
 export default createStore(
   reducer,
-  createPreloadedState()
-  // applyMiddleware(...middlewaresCreator())
+  createPreloadedState(),
+  applyMiddleware(...middlewaresCreator())
 );
