@@ -19,6 +19,23 @@ import "./styles.scss";
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 * */
 
+export function defineWidgetHeight(parametersHeight: number | undefined) {
+  const minimalValue = 300;
+  const restComponentsTotalHeight = 180;
+
+  if (parametersHeight) {
+    const expectedHeight = parametersHeight - restComponentsTotalHeight;
+
+    if (expectedHeight < minimalValue) {
+      return minimalValue;
+    }
+
+    return expectedHeight;
+  }
+
+  return minimalValue;
+}
+
 type Props = {
   showTimeStamp: boolean;
   profileAvatar?: string;
@@ -61,27 +78,11 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
     );
   };
 
-  const defineWidgetHeight = () => {
-    const minimalValue = 300;
-    const restComponentsTotalHeight = 180;
-
-    if (parameters && parameters.chatbotHeight) {
-      const expectedHeight =
-        parameters.chatbotHeight - restComponentsTotalHeight;
-
-      if (expectedHeight < minimalValue) {
-        return minimalValue;
-      }
-
-      return expectedHeight;
-    }
-
-    return minimalValue;
-  };
-
   return (
     <div
-      style={{ height: defineWidgetHeight() }}
+      style={{
+        height: defineWidgetHeight(parameters && parameters.chatbotHeight),
+      }}
       id="messages"
       className="rcw-messages-container"
       ref={messageRef}
