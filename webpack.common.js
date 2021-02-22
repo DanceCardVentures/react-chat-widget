@@ -28,7 +28,7 @@ module.exports = {
             options: {
               ident: "postcss",
               plugins: () => [
-                require("postcss-flexbugs-fixes"), // eslint-disable-line
+                require("postcss-flexbugs-fixes"),
                 autoprefixer({
                   browsers: [
                     ">1%",
