@@ -39,6 +39,7 @@
   height: 150px;
   padding: 10px;
   border-top: 1px solid lightgray;
+  background: #fff;
 }
 
 .rcw-responses-animated-container {
@@ -77,10 +78,12 @@
     margin: 0 0 7px 4px;
     padding: 5px;
     width: 25px;
+    background: #fff;
     border-radius: 8px;
     border: 1px solid lightgrey;
     transition: 0.2s ease;
     outline: none;
+    color: #333;
 
     &:hover:not(:disabled) {
       border: 1px solid black;
