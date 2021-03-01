@@ -59,10 +59,13 @@ function constructSamples(
 }
 
 function Testimonials({ isLaunerEmbdded }: { isLaunerEmbdded?: boolean }) {
-  const { dialogConfig, parameters } = useSelector((state: GlobalState) => ({
-    dialogConfig: state.dialogConfig.config,
-    parameters: state.dialogConfig.parameters,
-  }));
+  const { dialogConfig, parameters, showChat } = useSelector(
+    (state: GlobalState) => ({
+      dialogConfig: state.dialogConfig.config,
+      parameters: state.dialogConfig.parameters,
+      showChat: state.behavior.showChat,
+    })
+  );
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -87,6 +90,7 @@ function Testimonials({ isLaunerEmbdded }: { isLaunerEmbdded?: boolean }) {
 
   return (
     <div
+      style={{ background: showChat ? "#fff" : "transparent" }}
       className={cn(
         "rcw-testimonials-container",
         isLaunerEmbdded && "rcw-testimonial-container-launcher-embedded"

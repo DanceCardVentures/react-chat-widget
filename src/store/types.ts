@@ -59,6 +59,10 @@ export interface DialogConfig {
   script: object;
   credibilityBuilders: string[];
   testimonials: Testimonial[];
+  phoneNumberParameters: {
+    phoneNumber: string;
+    delayInSeconds: number;
+  };
 }
 
 export interface WidgetParameters {

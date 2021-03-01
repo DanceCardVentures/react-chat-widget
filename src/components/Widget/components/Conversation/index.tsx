@@ -16,6 +16,7 @@ import Messages from "./components/Messages";
 import QuickButtons from "./components/QuickButtons";
 import Testimonials from "./components/Testimonials";
 import EmailRequest from "./components/EmailRequest";
+import PhoneNumber from "./components/PhoneNumber";
 
 import { AnyFunction } from "src/utils/types";
 
@@ -222,7 +223,11 @@ function Conversation({
         titleAvatar={titleAvatar}
       />
       <Testimonials />
+
+      <PhoneNumber />
+
       <Messages profileAvatar={profileAvatar} showTimeStamp={false} />
+
       <QuickButtons onQuickButtonClicked={onQuickButtonClicked} />
 
       <ul className="rcw-responses-carousel">{renderResponses()}</ul>
