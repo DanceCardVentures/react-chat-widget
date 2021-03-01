@@ -66,11 +66,11 @@ function Message({ message, showTimeStamp }: Props) {
         )}
       </div>
 
-      {showTimeStamp && (
+      {/* {showTimeStamp && (
         <span className="rcw-timestamp">
           {format(message.timestamp, "hh:mm")}
         </span>
-      )}
+      )} */}
     </div>
   );
 }

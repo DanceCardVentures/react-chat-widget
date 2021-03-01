@@ -14,6 +14,8 @@ import {
 import { AnyFunction } from "../../utils/types";
 import { makeLocalStorageSync } from "../../utils/localStorage";
 
+import isEmpty from "lodash/isEmpty";
+
 import { LOCAL_STORAGE_KEY } from "../../constants";
 
 import WidgetLayout from "./layout";
@@ -65,10 +67,13 @@ type Props = {
 };
 
 function Widget(props: Props) {
-  const { parameters, showChat } = useSelector((state: GlobalState) => ({
-    parameters: state.dialogConfig.parameters,
-    showChat: state.behavior.showChat,
-  }));
+  const { parameters, showChat, messages } = useSelector(
+    (state: GlobalState) => ({
+      parameters: state.dialogConfig.parameters,
+      showChat: state.behavior.showChat,
+      messages: state.messages.messages,
+    })
+  );
 
   const {
     handleQuickButtonClicked,
@@ -100,13 +105,17 @@ function Widget(props: Props) {
 
         dispatch(setDialogConfig(dialogConfig));
         dispatch(setWidgetParameters(widgetParameters));
+
         dispatch(setDialogActiveMessage(firstStep));
-        dispatch(
-          addResponseMessage({
-            text: firstStep.message,
-            wistiaMatcher: firstStep.wistiaMatcher,
-          })
-        );
+
+        if (isEmpty(messages)) {
+          dispatch(
+            addResponseMessage({
+              text: firstStep.message,
+              wistiaMatcher: firstStep.wistiaMatcher,
+            })
+          );
+        }
       }
     );
   }

@@ -8,6 +8,8 @@ import messages from "./reducers/messagesReducer";
 import quickButtons from "./reducers/quickButtonsReducer";
 import preview from "./reducers/fullscreenPreviewReducer";
 
+import { SESSION_STORAGE_KEY } from "../constants";
+
 import { createPreloadedState } from "../utils/store";
 
 const reducer = combineReducers({
@@ -18,10 +20,23 @@ const reducer = combineReducers({
   preview,
 });
 
+const sessionStorageSync = (store) => (next) => (action) => {
+  const { messages } = store.getState();
+
+  sessionStorage.setItem(
+    SESSION_STORAGE_KEY,
+    JSON.stringify({
+      messages,
+    })
+  );
+
+  next(action);
+};
+
 function middlewaresCreator() {
   const logger = createLogger({});
 
-  return [thunk];
+  return [thunk, sessionStorageSync];
 }
 
 export default createStore(

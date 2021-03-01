@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import format from "date-fns/format";
 
 import { scrollToBottom } from "../../../../../../utils/messages";
@@ -9,7 +9,8 @@ import {
   CustomCompMessage,
   GlobalState,
 } from "../../../../../../store/types";
-import { setBadgeCount, markAllMessagesRead } from "@actions";
+
+import MessageComponent from "src/components/Widget/components/Conversation/components/Messages/components/Message";
 
 import Loader from "./components/Loader";
 import "./styles.scss";
@@ -41,9 +42,8 @@ type Props = {
   profileAvatar?: string;
 };
 
-function Messages({ profileAvatar, showTimeStamp }: Props) {
-  const dispatch = useDispatch();
-  const { messages, typing, showChat, badgeCount, parameters } = useSelector(
+function Messages({ showTimeStamp }: Props) {
+  const { messages, typing, showChat, parameters } = useSelector(
     (state: GlobalState) => ({
       messages: state.messages.messages,
       badgeCount: state.messages.badgeCount,
@@ -57,25 +57,13 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
   useEffect(() => {
     // @ts-ignore
     scrollToBottom(messageRef.current);
-    if (showChat && badgeCount) {
-      dispatch(markAllMessagesRead());
-    } else {
-      dispatch(
-        setBadgeCount(messages.filter((message) => message.unread).length)
-      );
-    }
-  }, [messages, badgeCount, showChat]);
+  }, [messages, showChat]);
 
   const getComponentToRender = (
     message: Message | Link | CustomCompMessage
   ) => {
-    const ComponentToRender = message.component;
-
-    if (message.type === "component")
-      return <ComponentToRender {...message.props} />;
-    return (
-      <ComponentToRender message={message} showTimeStamp={showTimeStamp} />
-    );
+    // @ts-ignore
+    return <MessageComponent message={message} showTimeStamp={showTimeStamp} />;
   };
 
   return (
@@ -87,15 +75,12 @@ function Messages({ profileAvatar, showTimeStamp }: Props) {
       className="rcw-messages-container"
       ref={messageRef}
     >
-      {messages?.map((message, index) => {
+      {messages.map((message, index) => {
         return (
           <div
             className="rcw-message"
             key={`${index}-${format(message.timestamp, "hh:mm")}`}
           >
-            {profileAvatar && message.showAvatar && (
-              <img src={profileAvatar} className="rcw-avatar" alt="profile" />
-            )}
             {getComponentToRender(message)}
           </div>
         );
