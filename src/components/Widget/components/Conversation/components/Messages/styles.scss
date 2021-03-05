@@ -4,8 +4,52 @@
 .rcw-messages-container {
   background-color: $white;
   overflow-y: scroll;
-  padding-top: 25px;
-  -webkit-overflow-scrolling: touch;
+  // -webkit-overflow-scrolling: touch;
+  // border: 2px dashed red;
+  z-index: 10;
+  height: 53%;
+
+  &.rcw-messages-container-with-padding-top {
+    padding-top: 25px;
+  }
+}
+
+@media screen and (max-height: 850px) {
+  .rcw-messages-container {
+    height: 66.5%;
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .rcw-messages-container {
+    height: 62.5%;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .rcw-messages-container {
+    height: 59.5%;
+  }
+}
+
+@media screen and (max-height: 650px) {
+  .rcw-messages-container {
+    height: 56.5%;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .rcw-messages-container {
+    height: 51.5%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .rcw-messages-container {
+    &.rcw-messages-container-with-padding-top {
+      padding-top: 50px;
+    }
+  }
 }
 
 .rcw-full-screen {
@@ -16,6 +60,6 @@
 
 @media screen and (max-width: 800px) {
   .rcw-messages-container {
-    @include messages-container-fs;
+    // @include messages-container-fs;
   }
 }

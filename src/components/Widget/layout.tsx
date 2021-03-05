@@ -115,7 +115,7 @@ function WidgetLayout({
 
   return (
     <div
-      style={{ width: parameters?.chatbotWidth }}
+      style={window.innerWidth > 600 ? { width: parameters?.chatbotWidth } : {}}
       className={cn("rcw-widget-container", {
         "rcw-full-screen": fullScreenMode,
         "rcw-previewer": imagePreview,

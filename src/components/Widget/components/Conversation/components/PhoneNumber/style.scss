@@ -10,8 +10,14 @@
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
 
-  img {
+  svg {
     width: 27px;
     margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .rcw-phone-number-container {
+    top: 120px;
   }
 }

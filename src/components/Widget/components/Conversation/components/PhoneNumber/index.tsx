@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 import { GlobalState } from "src/store/types";
 
-import phoneNumberIconSrc from "../../../../../../../assets/phone-call.svg";
+import { renderPhoneIcon } from "src/utils/iconRenderers";
 
 import "./style.scss";
 
@@ -26,8 +26,10 @@ const animationVariants = {
 function PhoneNumber() {
   const {
     config: { config },
+    parameters,
   } = useSelector((state: GlobalState) => ({
     config: state.dialogConfig,
+    parameters: state.dialogConfig.parameters,
   }));
 
   const [isVisible, setVisibility] = useState(false);
@@ -50,9 +52,11 @@ function PhoneNumber() {
       animate={isVisible ? "visible" : "hidden"}
       className="rcw-phone-number-container"
     >
-      <img src={phoneNumberIconSrc} alt="Phone" />
+      {renderPhoneIcon(parameters?.phoneIconColor)}
 
-      {config?.phoneNumberParameters.phoneNumber}
+      <span style={{ color: parameters?.phoneIconColor }}>
+        {config?.phoneNumberParameters.phoneNumber}
+      </span>
     </motion.div>
   );
 }

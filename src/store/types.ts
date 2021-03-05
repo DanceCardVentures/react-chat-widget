@@ -76,6 +76,7 @@ export interface WidgetParameters {
   chatOptionButtonTextColor: string;
   openButtonColor: string;
   linkColor: string;
+  phoneIconColor: string;
   fontSize: number;
   title: string;
   subTitle: string;

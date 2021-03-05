@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import format from "date-fns/format";
+import cn from "classnames";
 
 import { scrollToBottom } from "../../../../../../utils/messages";
 import {
@@ -53,6 +54,8 @@ function Messages({ showTimeStamp }: Props) {
     })
   );
 
+  const [phoneNumberIsVisible, setPhoneNumberVisibility] = useState(true);
+
   const messageRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     // @ts-ignore
@@ -66,14 +69,25 @@ function Messages({ showTimeStamp }: Props) {
     return <MessageComponent message={message} showTimeStamp={showTimeStamp} />;
   };
 
+  const inlineHeightStyles =
+    window.innerWidth > 600
+      ? { height: defineWidgetHeight(parameters && parameters.chatbotHeight) }
+      : {};
+
+  // console.log(window.innerHeight);
+
+  // const heightValue = defineWidgetHeight(
+  //   parameters && parameters.chatbotHeight + window.innerHeight * 0.1
+  // );
+
   return (
     <div
-      style={{
-        height: defineWidgetHeight(parameters && parameters.chatbotHeight),
-      }}
-      id="messages"
-      className="rcw-messages-container"
       ref={messageRef}
+      id="messages"
+      style={inlineHeightStyles}
+      className={cn("rcw-messages-container", {
+        "rcw-messages-container-with-padding-top": phoneNumberIsVisible,
+      })}
     >
       {messages.map((message, index) => {
         return (
