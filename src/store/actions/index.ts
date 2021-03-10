@@ -88,6 +88,12 @@ export function toggleShowEmailRequestPopup(): actionsTypes.ToggleShowEmailReque
   };
 }
 
+export function showPhoneNumber(): actionsTypes.ShowPhoneNumber {
+  return {
+    type: actionsTypes.SHOW_PHONE_NUMBER,
+  };
+}
+
 export function addLinkSnippet(
   link: LinkParams,
   id?: string

@@ -16,6 +16,7 @@ export const SET_WIDGET_PARAMETERS = "WIDGET/SET_WIDGET_PARAMETERS";
 export const TOGGLE_CHAT = "BEHAVIOR/TOGGLE_CHAT";
 export const TOGGLE_INPUT_DISABLED = "BEHAVIOR/TOGGLE_INPUT_DISABLED";
 export const TOGGLE_MESSAGE_LOADER = "BEHAVIOR/TOGGLE_MSG_LOADER";
+export const SHOW_PHONE_NUMBER = "BEHAVIOR/SHOW_PHONE_NUMBER";
 export const SET_BADGE_COUNT = "BEHAVIOR/SET_BADGE_COUNT";
 export const TOGGLE_SHOW_EMAIL_REQUEST_POPUP =
   "BEHAVIOR/TOGGLE_SHOW_EMAIL_REQUEST_POPUP";
@@ -50,6 +51,10 @@ export interface SetWidgetParameters {
 
 export interface ToggleChat {
   type: typeof TOGGLE_CHAT;
+}
+
+export interface ShowPhoneNumber {
+  type: typeof SHOW_PHONE_NUMBER;
 }
 
 export interface ToggleInputDisabled {
@@ -125,7 +130,8 @@ export type DialogConfigActions = SetDialogConfig;
 export type BehaviorActions =
   | ToggleChat
   | ToggleInputDisabled
-  | ToggleMsgLoader;
+  | ToggleMsgLoader
+  | ShowPhoneNumber;
 
 export type MessagesActions =
   | AddUserMessage

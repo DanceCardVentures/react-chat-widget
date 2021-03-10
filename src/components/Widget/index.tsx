@@ -10,6 +10,7 @@ import {
   setWidgetParameters,
   setDialogActiveMessage,
   addResponseMessage,
+  showPhoneNumber,
 } from "../../store/actions";
 import { AnyFunction } from "../../utils/types";
 import { makeLocalStorageSync } from "../../utils/localStorage";
@@ -115,6 +116,14 @@ function Widget(props: Props) {
               wistiaMatcher: firstStep.wistiaMatcher,
             })
           );
+        }
+
+        const { phoneNumberParameters } = script;
+
+        if (phoneNumberParameters && phoneNumberParameters.delayInSeconds) {
+          setTimeout(() => {
+            dispatch(showPhoneNumber());
+          }, phoneNumberParameters.delayInSeconds * 1000);
         }
       }
     );

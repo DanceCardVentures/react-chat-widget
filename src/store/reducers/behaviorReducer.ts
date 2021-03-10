@@ -6,6 +6,7 @@ import {
   TOGGLE_CHAT,
   TOGGLE_INPUT_DISABLED,
   TOGGLE_MESSAGE_LOADER,
+  SHOW_PHONE_NUMBER,
   TOGGLE_SHOW_EMAIL_REQUEST_POPUP,
 } from "../actions/types";
 
@@ -14,6 +15,7 @@ const initialState = {
   disabledInput: false,
   messageLoader: false,
   showEmailRequestPopup: true,
+  phoneNumberIsVisible: false,
 };
 
 const behaviorReducer = {
@@ -30,6 +32,11 @@ const behaviorReducer = {
   [TOGGLE_MESSAGE_LOADER]: (state: BehaviorState) => ({
     ...state,
     messageLoader: !state.messageLoader,
+  }),
+
+  [SHOW_PHONE_NUMBER]: (state: BehaviorState) => ({
+    ...state,
+    phoneNumberIsVisible: true,
   }),
 
   [TOGGLE_SHOW_EMAIL_REQUEST_POPUP]: (state: BehaviorState) => ({

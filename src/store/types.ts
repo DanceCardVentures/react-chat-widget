@@ -96,6 +96,7 @@ export interface BehaviorState {
   disabledInput: boolean;
   messageLoader: boolean;
   showEmailRequestPopup: boolean;
+  phoneNumberIsVisible: boolean;
 }
 
 export interface MessagesState {

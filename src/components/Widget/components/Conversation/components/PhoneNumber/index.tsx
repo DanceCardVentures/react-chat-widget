@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
@@ -27,36 +27,23 @@ function PhoneNumber() {
   const {
     config: { config },
     parameters,
+    phoneNumberIsVisible,
   } = useSelector((state: GlobalState) => ({
     config: state.dialogConfig,
     parameters: state.dialogConfig.parameters,
+    phoneNumberIsVisible: state.behavior.phoneNumberIsVisible,
   }));
-
-  const [isVisible, setVisibility] = useState(false);
-
-  useEffect(() => {
-    setTimeout(
-      () => {
-        setVisibility(true);
-      },
-      config?.phoneNumberParameters.delayInSeconds
-        ? config?.phoneNumberParameters.delayInSeconds * 1000
-        : 3000
-    );
-  }, []);
 
   return (
     <motion.div
       initial={false}
       variants={animationVariants}
-      animate={isVisible ? "visible" : "hidden"}
+      animate={phoneNumberIsVisible ? "visible" : "hidden"}
       className="rcw-phone-number-container"
     >
       {renderPhoneIcon(parameters?.phoneIconColor)}
 
-      <span style={{ color: parameters?.phoneIconColor }}>
-        {config?.phoneNumberParameters.phoneNumber}
-      </span>
+      <span>{config?.phoneNumberParameters.phoneNumber}</span>
     </motion.div>
   );
 }

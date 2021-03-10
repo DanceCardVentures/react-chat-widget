@@ -44,17 +44,20 @@ type Props = {
 };
 
 function Messages({ showTimeStamp }: Props) {
-  const { messages, typing, showChat, parameters } = useSelector(
-    (state: GlobalState) => ({
-      messages: state.messages.messages,
-      badgeCount: state.messages.badgeCount,
-      typing: state.behavior.messageLoader,
-      showChat: state.behavior.showChat,
-      parameters: state.dialogConfig.parameters,
-    })
-  );
-
-  const [phoneNumberIsVisible, setPhoneNumberVisibility] = useState(true);
+  const {
+    phoneNumberIsVisible,
+    messages,
+    typing,
+    showChat,
+    parameters,
+  } = useSelector((state: GlobalState) => ({
+    messages: state.messages.messages,
+    badgeCount: state.messages.badgeCount,
+    typing: state.behavior.messageLoader,
+    showChat: state.behavior.showChat,
+    parameters: state.dialogConfig.parameters,
+    phoneNumberIsVisible: state.behavior.phoneNumberIsVisible,
+  }));
 
   const messageRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -73,12 +76,6 @@ function Messages({ showTimeStamp }: Props) {
     window.innerWidth > 600
       ? { height: defineWidgetHeight(parameters && parameters.chatbotHeight) }
       : {};
-
-  // console.log(window.innerHeight);
-
-  // const heightValue = defineWidgetHeight(
-  //   parameters && parameters.chatbotHeight + window.innerHeight * 0.1
-  // );
 
   return (
     <div
