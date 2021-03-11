@@ -4,7 +4,7 @@ import cn from "classnames";
 
 import { GlobalState, Testimonial } from "@types";
 
-import { renderTestimonialsIcon } from "../../../../../../utils/iconRenderers";
+// import { renderTestimonialsIcon } from "../../../../../../utils/iconRenderers";
 
 import "./style.scss";
 
@@ -96,9 +96,9 @@ function Testimonials({ isLaunerEmbdded }: { isLaunerEmbdded?: boolean }) {
         isLaunerEmbdded && "rcw-testimonial-container-launcher-embedded"
       )}
     >
-      {renderTestimonialsIcon(
+      {/* {renderTestimonialsIcon(
         isLaunerEmbdded ? "#FFF" : parameters?.titleBackgroundColor
-      )}
+      )} */}
       <ul className="rcw-testimonials-list">{samples[currentIndex]}</ul>
     </div>
   );

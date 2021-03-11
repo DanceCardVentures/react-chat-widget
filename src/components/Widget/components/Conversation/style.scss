@@ -37,7 +37,7 @@
 
 .rcw-responses-carousel {
   position: relative;
-  height: 150px;
+  min-height: 160px;
   padding: 10px;
   border-top: 1px solid lightgray;
   background: #fff;
@@ -45,8 +45,6 @@
 
 @media screen and (max-width: 600px) {
   .rcw-responses-carousel {
-    position: absolute;
-    bottom: 0;
     width: 100%;
   }
 }
@@ -93,6 +91,10 @@
     transition: 0.2s ease;
     outline: none;
     color: #333;
+
+    &:disabled {
+      opacity: 0.6;
+    }
 
     &:hover:not(:disabled) {
       border: 1px solid black;

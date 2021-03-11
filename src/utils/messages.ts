@@ -9,7 +9,6 @@ import {
 
 import Message from "../components/Widget/components/Conversation/components/Messages/components/Message";
 import Snippet from "../components/Widget/components/Conversation/components/Messages/components/Snippet";
-import QuickButton from "../components/Widget/components/Conversation/components/QuickButtons/components/QuickButton";
 
 import {
   MESSAGES_TYPES,
@@ -66,17 +65,6 @@ export function createComponentMessage(
     showAvatar,
     customId: id,
     unread: true,
-  };
-}
-
-export function createQuickButton(button: {
-  label: string;
-  value: string | number;
-}) {
-  return {
-    component: QuickButton,
-    label: button.label,
-    value: button.value,
   };
 }
 

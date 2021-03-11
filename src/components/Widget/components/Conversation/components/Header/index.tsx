@@ -31,8 +31,8 @@ function Header({
       style={{ background: parameters?.titleBackgroundColor }}
       className="rcw-header"
     >
-      {showCloseButton && (
-        <button className="rcw-close-button" onClick={toggleChat}>
+      {window.innerWidth < 600 && (
+        <button className="rcw-header-close-button" onClick={toggleChat}>
           <img src={close} className="rcw-close" alt="close" />
         </button>
       )}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
+import { use100vh } from "react-div-100vh";
 import { motion } from "framer-motion";
 
 import { DialogQuickResponse, GlobalState } from "src/store/types";
@@ -13,7 +14,6 @@ import {
 
 import Header from "./components/Header";
 import Messages from "./components/Messages";
-import QuickButtons from "./components/QuickButtons";
 import Testimonials from "./components/Testimonials";
 import EmailRequest from "./components/EmailRequest";
 import PhoneNumber from "./components/PhoneNumber";
@@ -48,7 +48,6 @@ function Conversation({
   toggleChat,
   profileAvatar,
   titleAvatar,
-  onQuickButtonClicked,
 }: Props) {
   const { dialogConfig, activeMessage, parameters } = useSelector(
     (state: GlobalState) => ({
@@ -208,29 +207,30 @@ function Conversation({
 
   /* - - - - - - - - - - - - - - - - - - - */
 
+  const height = window.innerWidth < 600 ? use100vh() : "auto";
+
   return (
-    <div
-      className={cn("rcw-conversation-container", className)}
-      aria-live="polite"
-    >
-      <EmailRequest />
+    <div style={{ height }}>
+      <div
+        className={cn("rcw-conversation-container", className)}
+        aria-live="polite"
+      >
+        <EmailRequest />
 
-      <Header
-        title={parameters ? parameters.title : ""}
-        subtitle={parameters ? parameters.subTitle : ""}
-        toggleChat={toggleChat}
-        showCloseButton={showCloseButton}
-        titleAvatar={titleAvatar}
-      />
-      <Testimonials />
+        <Header
+          title={parameters ? parameters.title : ""}
+          subtitle={parameters ? parameters.subTitle : ""}
+          toggleChat={toggleChat}
+          showCloseButton={showCloseButton}
+          titleAvatar={titleAvatar}
+        />
 
-      <PhoneNumber />
+        <Testimonials />
+        <PhoneNumber />
 
-      <Messages profileAvatar={profileAvatar} showTimeStamp={false} />
-
-      <QuickButtons onQuickButtonClicked={onQuickButtonClicked} />
-
-      <ul className="rcw-responses-carousel">{renderResponses()}</ul>
+        <Messages profileAvatar={profileAvatar} showTimeStamp={false} />
+        <ul className="rcw-responses-carousel">{renderResponses()}</ul>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
+import cn from "classnames";
 import { motion } from "framer-motion";
 
 import { GlobalState } from "../../../../store/types";
@@ -26,9 +27,8 @@ function Launcher({ toggle }: Props) {
 
   const buttonVarianst = {
     fullWidth: {
-      width: 275,
-      height: 52,
-      borderRadius: 12,
+      width: window.innerWidth < 600 ? 215 : 250,
+      height: window.innerWidth < 600 ? 40 : 52,
       transition: { delayChildren: 0.1 },
     },
     collapsed: { width: 52, height: 52, borderRadius: 30 },
@@ -40,7 +40,11 @@ function Launcher({ toggle }: Props) {
   };
 
   return (
-    <div className="rcw-laucner-button-holder">
+    <div
+      className={cn("rcw-laucner-button-holder", {
+        "rcw-laucner-button-holder-chat-is-open": showChat,
+      })}
+    >
       <motion.button
         style={{ background: parameters?.openButtonColor }}
         className="rcw-launcher-animated-button"

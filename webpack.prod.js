@@ -9,7 +9,10 @@ module.exports = merge(common, {
   mode: "production",
   optimization: {
     concatenateModules: true,
-    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
+    minimizer: [
+      new TerserPlugin({ extractComments: false }),
+      new CssMinimizerPlugin(),
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({

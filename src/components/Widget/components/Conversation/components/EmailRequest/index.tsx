@@ -7,8 +7,6 @@ import { GlobalState } from "src/store/types";
 
 import { toggleShowEmailRequestPopup } from "src/store/dispatcher";
 
-import { defineWidgetHeight } from "src/components/Widget/components/Conversation/components/Messages";
-
 import malboxIconSrc from "../../../../../../../assets/mailbox.png";
 import doneIconSrc from "../../../../../../../assets/done-icon.svg";
 
@@ -70,8 +68,8 @@ function EmailRequest() {
   function handleSendEmail(e: React.FormEvent) {
     e.preventDefault();
 
-    const integrationId = "1d20328f-b6ef-4ead-a535-90c7e912f725";
-    const URL = `https://cs-back-dev.dancecardrx.com/consumer-api/v1/chatbot/widget/send-marketing-pdf/`;
+    const integrationId = "7fa68be8-6a53-447b-b8f5-3af6d02d7cec";
+    const URL = `https://cs-back-dev.dancecardrx.com/external-api/v1/chatbot/${integrationId}/send-followup-email/`;
 
     setIsLoading(true);
 
@@ -81,7 +79,6 @@ function EmailRequest() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        clientId: integrationId,
         recipientEmail: emailValue,
       }),
     })
@@ -95,18 +92,10 @@ function EmailRequest() {
       });
   }
 
-  const style = {
-    width: parameters?.chatbotWidth,
-    height: parameters?.chatbotHeight
-      ? defineWidgetHeight(parameters?.chatbotHeight) + 278
-      : 500,
-  };
-
   return (
     <React.Fragment>
       <motion.div
         className="rcw-email-request-holder"
-        style={style}
         initial={false}
         variants={animationVariants}
         animate={
@@ -147,7 +136,6 @@ function EmailRequest() {
 
       <motion.div
         className="rcw-email-request-holder"
-        style={style}
         initial={false}
         variants={animationVariantsThanks}
         animate={showThanksPage ? "visible" : "hidden"}
