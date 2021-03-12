@@ -31,7 +31,8 @@ type WidgetData = {
   dialogConfig: DialogConfig;
 };
 
-const integrationId = "1d20328f-b6ef-4ead-a535-90c7e912f725";
+const integrationId = "7fa68be8-6a53-447b-b8f5-3af6d02d7cec";
+// const integrationId = window.DANCECARD_LEAD_NURTURING_CHATBOT_INTEGRATION_ID;
 
 const URLS = {
   dialogScript: `https://cs-back-dev.dancecardrx.com/media/chatbot/chatbot-${integrationId}.json`,

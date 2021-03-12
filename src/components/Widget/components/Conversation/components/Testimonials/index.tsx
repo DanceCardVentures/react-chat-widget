@@ -4,8 +4,6 @@ import cn from "classnames";
 
 import { GlobalState, Testimonial } from "@types";
 
-// import { renderTestimonialsIcon } from "../../../../../../utils/iconRenderers";
-
 import "./style.scss";
 
 function constructSamples(
@@ -19,9 +17,8 @@ function constructSamples(
       : testimonials.map((testimonial) => (
           <li style={{ color }}>
             <span className="rcw-testimonial-author">
-              {testimonial.author}:
+              "{testimonial.author}: {testimonial.text}"
             </span>{" "}
-            <span>"{testimonial.text}"</span>
           </li>
         ));
 
@@ -96,9 +93,6 @@ function Testimonials({ isLaunerEmbdded }: { isLaunerEmbdded?: boolean }) {
         isLaunerEmbdded && "rcw-testimonial-container-launcher-embedded"
       )}
     >
-      {/* {renderTestimonialsIcon(
-        isLaunerEmbdded ? "#FFF" : parameters?.titleBackgroundColor
-      )} */}
       <ul className="rcw-testimonials-list">{samples[currentIndex]}</ul>
     </div>
   );

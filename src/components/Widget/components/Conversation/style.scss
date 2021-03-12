@@ -87,17 +87,18 @@
     width: 25px;
     background: #fff;
     border-radius: 8px;
-    border: 1px solid lightgrey;
+    border: 2px solid lightgrey;
     transition: 0.2s ease;
     outline: none;
     color: #333;
+    font-size: 15px;
 
     &:disabled {
       opacity: 0.6;
     }
 
     &:hover:not(:disabled) {
-      border: 1px solid black;
+      border: 2px solid black;
       cursor: pointer;
     }
   }
