@@ -83,6 +83,7 @@ export interface WidgetParameters {
   chatbotWidth: number;
   chatbotHeight: number;
   autoopenChatbot: boolean;
+  css?: string;
 }
 
 export interface DialogConfigState {

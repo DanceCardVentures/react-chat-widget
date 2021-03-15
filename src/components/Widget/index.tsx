@@ -43,6 +43,12 @@ function fetchData(url: string) {
   return fetch(url).then((response) => response.json());
 }
 
+function applyCSS(css: string) {
+  const element = document.createElement('style');
+  document.getElementsByTagName('head')[0].appendChild(element);
+  element.innerHTML = decodeURI(css); 
+}
+
 /* - - - - - - - - - - - - - - - - - - - */
 
 type Props = {
@@ -117,6 +123,10 @@ function Widget(props: Props) {
               wistiaMatcher: firstStep.wistiaMatcher,
             })
           );
+        }
+
+        if (widgetParameters.css) {
+          applyCSS(widgetParameters.css)
         }
 
         const { phoneNumberParameters } = script;
