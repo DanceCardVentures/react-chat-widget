@@ -59,14 +59,8 @@ module.exports = {
       {
         test: /\.(ico|jpg|png|gif|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/,
         exclude: /\/favicon.ico$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              name: "static/[name].[hash:8].[ext]",
-            },
-          },
-        ],
+        use: [{ loader: "url-loader" }],
+        type: "javascript/auto",
       },
 
       {

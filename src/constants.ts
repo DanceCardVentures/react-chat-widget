@@ -14,4 +14,6 @@ export const MESSAGES_TYPES = {
 export const MESSAGE_BOX_SCROLL_DURATION = 400;
 
 export const LOCAL_STORAGE_KEY = "dc-widget-data";
-export const SESSION_STORAGE_KEY = "dc-widget-data-ss";
+
+export const SESSION_STORAGE_MESSAGES_KEY = "dc-widget-data-ss-messages";
+export const SESSION_STORAGE_OPEN_STATUS_KEY = "dc-widget-data-ss-open-status";

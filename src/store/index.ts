@@ -9,7 +9,10 @@ import preview from "./reducers/fullscreenPreviewReducer";
 
 import { TOGGLE_CHAT } from "src/store/actions/types";
 
-import { SESSION_STORAGE_KEY } from "../constants";
+import {
+  SESSION_STORAGE_MESSAGES_KEY,
+  SESSION_STORAGE_OPEN_STATUS_KEY,
+} from "../constants";
 
 import { createPreloadedState } from "../utils/store";
 
@@ -21,10 +24,23 @@ const reducer = combineReducers({
 });
 
 const sessionStorageSync = (store) => (next) => (action) => {
-  const { messages } = store.getState();
+  const { messages, behavior } = store.getState();
+
+  if (action.type === TOGGLE_CHAT) {
+    const nextState = !behavior.showChat;
+
+    sessionStorage.setItem(
+      SESSION_STORAGE_OPEN_STATUS_KEY,
+      JSON.stringify({
+        behavior: {
+          showChat: nextState,
+        },
+      })
+    );
+  }
 
   sessionStorage.setItem(
-    SESSION_STORAGE_KEY,
+    SESSION_STORAGE_MESSAGES_KEY,
     JSON.stringify({
       messages,
     })

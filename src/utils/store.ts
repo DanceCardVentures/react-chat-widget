@@ -1,7 +1,11 @@
-import { LOCAL_STORAGE_KEY, SESSION_STORAGE_KEY } from "../constants";
+import {
+  LOCAL_STORAGE_KEY,
+  SESSION_STORAGE_MESSAGES_KEY,
+  SESSION_STORAGE_OPEN_STATUS_KEY,
+} from "../constants";
 import { getDataFromLocalStorage } from "./localStorage";
 
-function getDataFromSessionStorage(key: string) {
+export function getDataFromSessionStorage(key: string) {
   const raw = sessionStorage.getItem(key);
   return raw ? JSON.parse(raw) : {};
 }
@@ -18,7 +22,10 @@ export function createPreloadedState() {
     LOCAL_STORAGE_KEY
   );
 
-  const { messages } = getDataFromSessionStorage(SESSION_STORAGE_KEY);
+  const { messages } = getDataFromSessionStorage(SESSION_STORAGE_MESSAGES_KEY);
+  const { behavior } = getDataFromSessionStorage(
+    SESSION_STORAGE_OPEN_STATUS_KEY
+  );
 
   return {
     messages: {
@@ -27,6 +34,7 @@ export function createPreloadedState() {
         : [],
       badgeCount: 0,
     },
+    behavior,
     dialogConfig: {
       config: dialogConfig,
       parameters: widgetParameters,

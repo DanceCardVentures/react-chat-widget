@@ -17,7 +17,11 @@ import { makeLocalStorageSync } from "../../utils/localStorage";
 
 import isEmpty from "lodash/isEmpty";
 
-import { LOCAL_STORAGE_KEY } from "../../constants";
+import {
+  LOCAL_STORAGE_KEY,
+  SESSION_STORAGE_OPEN_STATUS_KEY,
+} from "../../constants";
+import { getDataFromSessionStorage } from "src/utils/store";
 
 import WidgetLayout from "./layout";
 
@@ -136,7 +140,11 @@ function Widget(props: Props) {
 
   useEffect(() => {
     if (parameters && parameters.autoopenChatbot) {
-      if (!showChat) {
+      const { behavior } = getDataFromSessionStorage(
+        SESSION_STORAGE_OPEN_STATUS_KEY
+      );
+
+      if (behavior === undefined && !showChat) {
         dispatch(toggleChat());
       }
     }
