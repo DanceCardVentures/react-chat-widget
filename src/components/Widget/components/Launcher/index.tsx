@@ -10,7 +10,8 @@ import Testimonials from "src/components/Widget/components/Conversation/componen
 
 import "./style.scss";
 
-import clsoseIconSrc from "../../../../../assets/close-icon.svg";
+import closeIconSrc from "../../../../../assets/close-icon.svg";
+import avatarImageSrc from "../../../../../assets/avatar.png";
 
 type Props = {
   toggle: () => void;
@@ -27,11 +28,18 @@ function Launcher({ toggle }: Props) {
 
   const buttonVarianst = {
     fullWidth: {
-      width: window.innerWidth < 600 ? 215 : 250,
-      height: window.innerWidth < 600 ? 40 : 52,
-      transition: { delayChildren: 0.1 },
+      width: window.innerWidth < 600 ? 235 : 275,
+      height: window.innerWidth < 600 ? 40 : 42,
+      transition: {
+        delayChildren: 0.1,
+      },
     },
-    collapsed: { width: 52, height: 52, borderRadius: 30 },
+    collapsed: {
+      width: 52,
+      height: 52,
+      borderRadius: 26,
+      transition: {},
+    },
   };
 
   const contentHolderVariants = {
@@ -48,14 +56,27 @@ function Launcher({ toggle }: Props) {
       <motion.button
         style={{ background: parameters?.openButtonColor }}
         className="rcw-launcher-animated-button"
-        initial={showChat ? buttonVarianst.collapsed : buttonVarianst.fullWidth}
+        initial={false}
         onClick={toggle}
         animate={showChat ? "collapsed" : "fullWidth"}
         variants={buttonVarianst}
       >
-        {showChat && <img src={clsoseIconSrc} alt="Close" />}
+        {showChat ? (
+          <img className="rcw-close-icon" src={closeIconSrc} alt="Close" />
+        ) : (
+          <motion.div variants={contentHolderVariants}>
+            <img
+              className="rcw-launcher-avatar-image"
+              src={avatarImageSrc}
+              alt="Avatar image"
+            />
+          </motion.div>
+        )}
 
-        <motion.div variants={contentHolderVariants}>
+        <motion.div
+          style={{ textAlign: "left" }}
+          variants={contentHolderVariants}
+        >
           <Testimonials isLaunerEmbdded />
         </motion.div>
       </motion.button>

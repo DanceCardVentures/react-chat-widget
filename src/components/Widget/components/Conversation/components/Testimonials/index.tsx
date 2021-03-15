@@ -85,6 +85,10 @@ function Testimonials({ isLaunerEmbdded }: { isLaunerEmbdded?: boolean }) {
     return () => clearInterval(interval);
   }, []);
 
+  // if (samples.length === 11) {
+  //   return <div />;
+  // }
+
   return (
     <div
       style={{ background: showChat ? "#fff" : "transparent" }}

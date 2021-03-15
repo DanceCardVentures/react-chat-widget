@@ -10,9 +10,11 @@
   font-weight: bold;
 
   &.rcw-testimonial-container-launcher-embedded {
-    justify-content: center;
+    height: auto;
+    // justify-content: center;
     color: #fff;
     border: 0;
+    font-size: 12px;
   }
 
   svg {
@@ -56,7 +58,7 @@
 
     .rcw-testimonial-author {
       padding-right: 5px;
-      opacity: 0.8;
+      // opacity: 0.8;
     }
   }
 }

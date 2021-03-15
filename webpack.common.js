@@ -55,6 +55,7 @@ module.exports = {
         test: /\.html$/,
         use: [{ loader: "html-loader" }],
       },
+
       {
         test: /\.(ico|jpg|png|gif|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/,
         exclude: /\/favicon.ico$/,
@@ -67,6 +68,7 @@ module.exports = {
           },
         ],
       },
+
       {
         test: /\.svg/,
         use: [{ loader: "url-loader" }],
